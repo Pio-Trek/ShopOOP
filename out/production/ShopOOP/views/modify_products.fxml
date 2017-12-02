@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.*?>
+<VBox prefHeight="645.0" prefWidth="770.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="controllers.ModifyProductController">
+	<children>
+		<AnchorPane maxHeight="-1.0" maxWidth="-1.0" VBox.vgrow="ALWAYS">
+			<children>
+				<Label alignment="CENTER" layoutY="48.0" prefHeight="44.0" prefWidth="770.0" style="&#10;"
+				       text="Modify Products" textAlignment="CENTER" wrapText="false">
+					<font>
+						<Font size="36.0"/>
+					</font>
+				</Label>
+				<Button layoutX="609.0" layoutY="549.0" mnemonicParsing="false" onAction="#back" text="◄ BACK">
+					<font>
+						<Font size="24.0"/>
+					</font>
+				</Button>
+				<ListView fx:id="lvCategory" onMouseClicked="#getProductList" layoutX="147.0" layoutY="140.0"
+				          prefHeight="263.0" prefWidth="200.0"/>
+				<Button layoutX="298.0" layoutY="421.0" mnemonicParsing="false" text="Add Product"
+				        onAction="#addProduct">
+					<font>
+						<Font size="24.0"/>
+					</font>
+				</Button>
+				<Button fx:id="btnEditProduct" layoutX="299.0" layoutY="481.0" mnemonicParsing="false"
+				        text="Edit Product" onAction="#editProduct">
+					<font>
+						<Font size="24.0"/>
+					</font>
+				</Button>
+				<Button fx:id="btnAddProduct" layoutX="284.0" layoutY="549.0" mnemonicParsing="false"
+				        text="Delete Product" textFill="RED" onAction="#deleteProduct">
+					<font>
+						<Font size="24.0"/>
+					</font>
+				</Button>
+				<ListView onMouseClicked="#buttonsSetEnable" fx:id="lvProduct" layoutX="434.0" layoutY="140.0" prefHeight="263.0"
+				          prefWidth="200.0"/>
+				<Label layoutX="186.0" layoutY="109.0" text="Categories">
+					<font>
+						<Font size="24.0"/>
+					</font>
+				</Label>
+				<Label layoutX="489.0" layoutY="109.0" text="Product">
+					<font>
+						<Font size="24.0"/>
+					</font>
+				</Label>
+			</children>
+		</AnchorPane>
+	</children>
+</VBox>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import validation.LoginTextField?>
+<?import validation.NumberTextField?>
+
+<VBox prefHeight="645.0" prefWidth="770.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.RegistrationController">
+	<children>
+		<AnchorPane maxHeight="-1.0" maxWidth="-1.0" VBox.vgrow="ALWAYS">
+			<children>
+				<Label alignment="CENTER" layoutY="48.0" prefHeight="44.0" prefWidth="770.0" style="&#10;" text="Register New Customer" textAlignment="CENTER">
+					<font>
+						<Font size="36.0" />
+					</font>
+				</Label>
+				<Button layoutX="268.0" layoutY="549.0" mnemonicParsing="false" onAction="#register" text="Submit">
+					<font>
+						<Font size="24.0" />
+					</font>
+				</Button>
+				<Button layoutX="438.0" layoutY="549.0" mnemonicParsing="false" onAction="#clear" text="Clear">
+					<font>
+						<Font size="24.0" />
+					</font>
+				</Button>
+				<Button layoutX="609.0" layoutY="549.0" mnemonicParsing="false" onAction="#back" text="◄ BACK">
+					<font>
+						<Font size="24.0" />
+					</font>
+				</Button>
+				<Label layoutX="174.0" layoutY="120.0" text="Username">
+					<font>
+						<Font size="24.0" />
+					</font>
+				</Label>
+				<LoginTextField fx:id="txtUsername" layoutX="323.0" layoutY="112.0">
+					<font>
+						<Font size="24.0" />
+					</font>
+				</LoginTextField>
+				<LoginTextField fx:id="txtPassword" layoutX="323.0" layoutY="165.0">
+					<font>
+						<Font size="24.0" />
+					</font>
+				</LoginTextField>
+				<TextField fx:id="txtFirstName" layoutX="323.0" layoutY="220.0">
+					<font>
+						<Font size="24.0" />
+					</font>
+				</TextField>
+				<TextField fx:id="txtLastName" layoutX="323.0" layoutY="278.0">
+					<font>
+						<Font size="24.0" />
+					</font>
+				</TextField>
+				<NumberTextField fx:id="txtAddressLine1" layoutX="213.0" layoutY="339.0" prefHeight="45.0" prefWidth="111.0">
+					<font>
+						<Font size="24.0" />
+					</font>
+				</NumberTextField>
+				<TextField fx:id="txtAddressLine2" layoutX="421.0" layoutY="339.0">
+					<font>
+						<Font size="24.0" />
+					</font>
+				</TextField>
+				<TextField fx:id="txtTown" layoutX="323.0" layoutY="402.0">
+					<font>
+						<Font size="24.0" />
+					</font>
+				</TextField>
+				<TextField fx:id="txtPostcode" layoutX="323.0" layoutY="464.0">
+					<font>
+						<Font size="24.0" />
+					</font>
+				</TextField>
+				<Label layoutX="179.0" layoutY="173.0" text="Password">
+					<font>
+						<Font size="24.0" />
+					</font>
+				</Label>
+				<Label layoutX="171.0" layoutY="228.0" text="First Name">
+					<font>
+						<Font size="24.0" />
+					</font>
+				</Label>
+				<Label layoutX="172.0" layoutY="286.0" text="Last Name">
+					<font>
+						<Font size="24.0" />
+					</font>
+				</Label>
+				<Label layoutX="31.0" layoutY="347.0" text="House/Flat No">
+					<font>
+						<Font size="24.0" />
+					</font>
+				</Label>
+				<Label layoutX="340.0" layoutY="347.0" text="Street">
+					<font>
+						<Font size="24.0" />
+					</font>
+				</Label>
+				<Label layoutX="228.0" layoutY="410.0" text="Town">
+					<font>
+						<Font size="24.0" />
+					</font>
+				</Label>
+				<Label layoutX="193.0" layoutY="472.0" text="Postcode">
+					<font>
+						<Font size="24.0" />
+					</font>
+				</Label>
+				<Label fx:id="lblLoginStatus" layoutX="31.0" layoutY="600.0" textFill="RED">
+					<font>
+						<Font size="24.0" />
+					</font>
+				</Label>
+			</children>
+		</AnchorPane>
+	</children>
+</VBox>

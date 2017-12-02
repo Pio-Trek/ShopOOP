@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.*?>
+<?import validation.NumberTextField?>
+<?import validation.PriceTextField?>
+<VBox prefHeight="645.0" prefWidth="770.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="controllers.EditProductsController">
+	<children>
+		<AnchorPane maxHeight="-1.0" maxWidth="-1.0" VBox.vgrow="ALWAYS">
+			<children>
+				<Label fx:id="lblHeader" alignment="CENTER" layoutY="48.0" prefHeight="44.0" prefWidth="770.0"
+				       style="&#10;" text="" textAlignment="CENTER">
+					<font>
+						<Font size="36.0"/>
+					</font>
+				</Label>
+				<Button layoutX="609.0" layoutY="549.0" mnemonicParsing="false" onAction="#back" text="◄ BACK">
+					<font>
+						<Font size="24.0"/>
+					</font>
+				</Button>
+				<Button fx:id="btnSubmit" layoutX="243.0" layoutY="504.0" mnemonicParsing="false"
+				        onAction="#saveProduct" text="Submit">
+					<font>
+						<Font size="24.0"/>
+					</font>
+				</Button>
+				<Button fx:id="btnClear" layoutX="429.0" layoutY="504.0" mnemonicParsing="false" onAction="#clear"
+				        text="Clear">
+					<font>
+						<Font size="24.0"/>
+					</font>
+				</Button>
+				<Label fx:id="lblType" layoutX="179.0" layoutY="132.0" text="Type:">
+					<font>
+						<Font size="24.0"/>
+					</font>
+				</Label>
+				<RadioButton fx:id="rb_clothing" layoutX="266.0" layoutY="131.0" mnemonicParsing="false"
+				             onAction="#selectClothing" text="Clothing">
+					<font>
+						<Font size="24.0"/>
+					</font>
+					<toggleGroup>
+						<ToggleGroup fx:id="productType"/>
+					</toggleGroup>
+				</RadioButton>
+				<RadioButton fx:id="rb_footwear" layoutX="417.0" layoutY="131.0" mnemonicParsing="false"
+				             onAction="#selectFootwear" text="Footwear" toggleGroup="$productType">
+					<font>
+						<Font size="24.0"/>
+					</font>
+				</RadioButton>
+				<Label layoutX="170.0" layoutY="211.0" text="Name:">
+					<font>
+						<Font size="24.0"/>
+					</font>
+				</Label>
+				<TextField fx:id="txtProductName" layoutX="264.0" layoutY="203.0">
+					<font>
+						<Font size="24.0"/>
+					</font>
+				</TextField>
+				<Label layoutX="174.0" layoutY="266.0" text="Price:">
+					<font>
+						<Font size="24.0"/>
+					</font>
+				</Label>
+				<PriceTextField fx:id="txtPrice" layoutX="264.0" layoutY="258.0">
+					<font>
+						<Font size="24.0"/>
+					</font>
+				</PriceTextField>
+				<Label layoutX="101.0" layoutY="319.0" text="Stock Level:">
+					<font>
+						<Font size="24.0"/>
+					</font>
+				</Label>
+				<NumberTextField fx:id="txtStockLevel" layoutX="264.0" layoutY="311.0">
+					<font>
+						<Font size="24.0"/>
+					</font>
+				</NumberTextField>
+				<Label fx:id="lblSizes" alignment="CENTER_RIGHT" layoutY="373.0" prefHeight="29.0" prefWidth="243.0"
+				       textAlignment="CENTER">
+					<font>
+						<Font size="24.0"/>
+					</font>
+				</Label>
+				<TextField fx:id="txtMeasurement" layoutX="264.0" layoutY="365.0">
+					<font>
+						<Font size="24.0"/>
+					</font>
+				</TextField>
+				<NumberTextField fx:id="txtSize" layoutX="264.0" layoutY="365.0">
+					<font>
+						<Font size="24.0"/>
+					</font>
+				</NumberTextField>
+				<Label fx:id="lblStatus" layoutX="44.0" layoutY="580.0" textFill="RED">
+					<font>
+						<Font size="24.0"/>
+					</font>
+				</Label>
+				<Label fx:id="lblId" layoutX="211.0" layoutY="155.0" text="ID:">
+					<font>
+						<Font size="24.0"/>
+					</font>
+				</Label>
+				<TextField fx:id="txtProductId" disable="true" editable="false" layoutX="264.0" layoutY="147.0">
+					<font>
+						<Font size="24.0"/>
+					</font>
+				</TextField>
+			</children>
+		</AnchorPane>
+	</children>
+</VBox>
