@@ -8,6 +8,8 @@ Basically, the app is a simple, desktop store system that allows the user to cre
 
 The application is still in progress and will be completed by the end of February 2018. Below you can check what is done and what is need to be done.
 
+![Sample Screen](https://github.com/Pio-Trek/ShopOOP/blob/master/app01.png)
+
 ## Progress list (what needs to be done)
 - [x] Login as user (sample username: user1, password: 123qwe) and as a staff member (login: staff1, password: 123qwe)
 - [x] Register a new user
