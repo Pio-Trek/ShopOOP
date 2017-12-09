@@ -7,6 +7,7 @@
 <?import javafx.scene.text.Font?>
 <?import validation.LoginTextField?>
 
+<?import javafx.scene.control.PasswordField?>
 <VBox onKeyPressed="#loginKey" prefHeight="645.0" prefWidth="770.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.StaffLoginController">
 	<children>
 		<AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
@@ -36,17 +37,17 @@
 						<Font size="24.0" />
 					</font>
 				</Label>
-				<LoginTextField fx:id="txtUsername" layoutX="282.0" layoutY="207.0">
+				<LoginTextField fx:id="inputUsername" layoutX="282.0" layoutY="207.0">
 					<font>
 						<Font size="24.0" />
 					</font>
 				</LoginTextField>
-				<LoginTextField fx:id="txtPassword" layoutX="282.0" layoutY="282.0">
+				<PasswordField fx:id="inputPassword" layoutX="282.0" layoutY="282.0">
 					<font>
 						<Font size="24.0" />
 					</font>
-				</LoginTextField>
-				<Label fx:id="lblLoginStatus" layoutX="44.0" layoutY="557.0" textFill="RED">
+				</PasswordField>
+				<Label fx:id="labelStatus" layoutX="44.0" layoutY="557.0" textFill="RED">
 					<font>
 						<Font size="24.0" />
 					</font>

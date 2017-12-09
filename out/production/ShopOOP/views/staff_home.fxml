@@ -10,7 +10,7 @@
 	<children>
 		<AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
 			<children>
-				<Label fx:id="lblWelcome" alignment="CENTER" contentDisplay="CENTER" layoutX="-2.0" layoutY="48.0" prefHeight="17.0" prefWidth="770.0" text="Welcome NAME" textAlignment="CENTER" textOverrun="WORD_ELLIPSIS">
+				<Label fx:id="labelWelcome" alignment="CENTER" contentDisplay="CENTER" layoutX="-2.0" layoutY="48.0" prefHeight="17.0" prefWidth="770.0" text="Welcome NAME" textAlignment="CENTER" textOverrun="WORD_ELLIPSIS">
 					<font>
 						<Font size="36.0" />
 					</font>

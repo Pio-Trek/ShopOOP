@@ -24,13 +24,13 @@ public class ModifyProductController {
     private final List<String> categoryList = List.of("Clothing", "Footwear");
 
     @FXML
-    private Button btnEditProduct;
+    private Button buttonEditProduct;
     @FXML
-    private Button btnAddProduct;
+    private Button buttonAddProduct;
     @FXML
-    private ListView<String> lvCategory;
+    private ListView<String> listViewCategory;
     @FXML
-    private ListView<Product> lvProduct = new ListView<>();
+    private ListView<Product> listViewProduct = new ListView<>();
 
     private Staff staff;
     private StageService stage = new StageService();
@@ -43,9 +43,9 @@ public class ModifyProductController {
     public void initialize(Staff staff) {
         this.staff = staff;
         buttonsSetDisable();
-        lvCategory.getItems().addAll(categoryList);
-        lvCategory.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        lvProduct.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        listViewCategory.getItems().addAll(categoryList);
+        listViewCategory.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        listViewProduct.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     }
 
     /**
@@ -57,11 +57,11 @@ public class ModifyProductController {
         buttonsSetDisable();
 
         // Clear Product column
-        lvProduct.getItems().clear();
+        listViewProduct.getItems().clear();
 
         String sql;
         // Check if selected Category row in ListView is Clothing or Footwear
-        if (Objects.equals(lvCategory.getSelectionModel().getSelectedItem(), categoryList.get(0))) {
+        if (Objects.equals(listViewCategory.getSelectionModel().getSelectedItem(), categoryList.get(0))) {
             sql = sqlQueryProducts(ProductsEntry.COLUMN_MEASUREMENT);
         } else {
             sql = sqlQueryProducts(ProductsEntry.COLUMN_SIZE);
@@ -81,10 +81,10 @@ public class ModifyProductController {
             }
 
             // Hold the list of Product in a ListView
-            lvProduct.getItems().addAll(productList);
+            listViewProduct.getItems().addAll(productList);
 
             // Populate Product using a ListView setCellFactory() method
-            lvProduct.setCellFactory(lv -> new ListCell<>() {
+            listViewProduct.setCellFactory(lv -> new ListCell<>() {
                 @Override
                 public void updateItem(Product product, boolean empty) {
                     super.updateItem(product, empty);
@@ -115,9 +115,9 @@ public class ModifyProductController {
      * Set disable Add and Edit button, when no product is selected.
      */
     private void buttonsSetDisable() {
-        if (!btnAddProduct.isDisable() && !btnEditProduct.isDisable()) {
-            btnAddProduct.setDisable(true);
-            btnEditProduct.setDisable(true);
+        if (!buttonAddProduct.isDisable() && !buttonEditProduct.isDisable()) {
+            buttonAddProduct.setDisable(true);
+            buttonEditProduct.setDisable(true);
         }
     }
 
@@ -127,9 +127,9 @@ public class ModifyProductController {
      */
     @FXML
     private void buttonsSetEnable() {
-        if (lvProduct.getSelectionModel().getSelectedItem() != null) {
-            btnAddProduct.setDisable(false);
-            btnEditProduct.setDisable(false);
+        if (listViewProduct.getSelectionModel().getSelectedItem() != null) {
+            buttonAddProduct.setDisable(false);
+            buttonEditProduct.setDisable(false);
         }
     }
 
@@ -154,7 +154,7 @@ public class ModifyProductController {
             int stockLevel = rs.getInt(ProductsEntry.COLUMN_STOCK_LEVEL);
 
             // If user selected Clothing product
-            if (Objects.equals(lvCategory.getSelectionModel().getSelectedItem(), categoryList.get(0))) {
+            if (Objects.equals(listViewCategory.getSelectionModel().getSelectedItem(), categoryList.get(0))) {
                 String measurement = rs.getString(ProductsEntry.COLUMN_MEASUREMENT);
                 Clothing clothing = new Clothing(productId, productName, price, stockLevel, measurement);
                 stage.loadStage(actionEvent, staff, clothing, null);
@@ -199,7 +199,7 @@ public class ModifyProductController {
                 pstmt.executeUpdate();
 
                 // Refresh Product column
-                lvProduct.getSelectionModel().clearSelection();
+                listViewProduct.getSelectionModel().clearSelection();
                 getProductList();
 
             } catch (SQLException e) {
@@ -214,7 +214,7 @@ public class ModifyProductController {
      * @return Product object.
      */
     private Product currentProduct() {
-        Product selected = lvProduct.getSelectionModel().getSelectedItem();
+        Product selected = listViewProduct.getSelectionModel().getSelectedItem();
         int selectedId = selected.getProductId();
         String selectedName = selected.getProductName();
 

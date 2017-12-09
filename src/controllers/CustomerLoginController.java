@@ -4,11 +4,13 @@ import data.ShopContract.CustomerEntry;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import models.Customer;
 import service.ControllerService;
+import service.LabelStatusService;
 import service.LoginService;
 import service.StageService;
 import validation.LoginValidation;
@@ -18,11 +20,11 @@ import java.io.IOException;
 public class CustomerLoginController {
 
     @FXML
-    private Label lblLoginStatus;
+    private Label labelStatus;
     @FXML
-    private TextField txtUsername;
+    private TextField inputUsername;
     @FXML
-    private TextField txtPassword;
+    private PasswordField inputPassword;
     private StageService stage = new StageService();
 
     /**
@@ -39,23 +41,23 @@ public class CustomerLoginController {
     private void login(ActionEvent actionEvent) throws IOException {
 
         // Validate user input
-        LoginValidation result = LoginValidation.validResult(txtUsername.getText(), txtPassword.getText());
+        LoginValidation result = LoginValidation.validResult(inputUsername.getText(), inputPassword.getText());
         if (result.isValid()) {
             // Execute the SQL query and try to find user
             LoginService login = new LoginService();
-            boolean isAuthorized = login.execute(CustomerEntry.TABLE_NAME, txtUsername.getText(), txtPassword.getText());
+            boolean isAuthorized = login.execute(CustomerEntry.TABLE_NAME, inputUsername.getText(), inputPassword.getText());
 
             // If user found in database then create a new Customer object
             if (isAuthorized) {
-                Customer customer = login.customer();
+                Customer customer = login.getCustomer();
                 if (customer != null)
                     stage.loadStage(actionEvent, customer, ControllerService.CUSTOMER_HOME);
             } else {
-                lblLoginStatus.setText("Login Failed");
+                LabelStatusService.getError(labelStatus, "Login Failed");
             }
 
         } else {
-            lblLoginStatus.setText(result.getErrorMessage());
+            LabelStatusService.getError(labelStatus, result.getErrorMessage());
         }
 
     }
@@ -75,11 +77,11 @@ public class CustomerLoginController {
 
     /**
      * Register button action.
-     * Opens a new stage {@link RegistrationController}
+     * Opens a new stage {@link EditCustomerController}
      */
     @FXML
     private void register(ActionEvent actionEvent) throws IOException {
-        stage.loadStage(actionEvent, ControllerService.REGISTRATION);
+        stage.loadStage(actionEvent, ControllerService.EDIT_CUSTOMER);
     }
 
     /**

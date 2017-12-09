@@ -12,6 +12,7 @@ import models.Footwear;
 import models.Staff;
 import service.ControllerService;
 import service.DbManager;
+import service.LabelStatusService;
 import service.StageService;
 import validation.CompareObjects;
 import validation.ProductValidation;
@@ -22,35 +23,35 @@ import java.sql.*;
 public class EditProductsController {
 
     @FXML
-    private RadioButton rb_clothing;
+    private RadioButton radioButtonClothing;
     @FXML
-    private RadioButton rb_footwear;
+    private RadioButton radioButtonFootwear;
     @FXML
-    private Label lblHeader;
+    private Label labelHeader;
     @FXML
-    private Label lblStatus;
+    private Label labelStatus;
     @FXML
-    private Button btnSubmit;
+    private Button buttonSubmit;
     @FXML
-    private Button btnClear;
+    private Button buttonClear;
     @FXML
-    private TextField txtProductName;
+    private TextField inputProductName;
     @FXML
-    private TextField txtStockLevel;
+    private TextField inputStockLevel;
     @FXML
-    private TextField txtPrice;
+    private TextField inputPrice;
     @FXML
-    private TextField txtProductId;
+    private TextField inputProductId;
     @FXML
-    private Label lblSizes;
+    private Label labelSizes;
     @FXML
-    private Label lblType;
+    private Label labelType;
     @FXML
-    private Label lblId;
+    private Label labelId;
     @FXML
-    private TextField txtMeasurement;
+    private TextField inputMeasurement;
     @FXML
-    private TextField txtSize;
+    private TextField labelSize;
 
     private Staff staff;
     private StageService stage = new StageService();
@@ -69,10 +70,10 @@ public class EditProductsController {
      */
     public void initialize(Staff staff) {
         this.staff = staff;
-        lblHeader.setText("Add New Product");
+        labelHeader.setText("Add New Product");
 
-        txtProductId.setVisible(false);
-        lblId.setVisible(false);
+        inputProductId.setVisible(false);
+        labelId.setVisible(false);
         setElementsDisabled(true);
     }
 
@@ -86,7 +87,7 @@ public class EditProductsController {
     public void initialize(Staff staff, Clothing clothing) {
         this.staff = staff;
         this.clothing = clothing;
-        lblHeader.setText("Edit Clothing");
+        labelHeader.setText("Edit Clothing");
         selectClothing();
         setRadioButtonsInvisible();
 
@@ -103,7 +104,7 @@ public class EditProductsController {
     public void initialize(Staff staff, Footwear footwear) {
         this.staff = staff;
         this.footwear = footwear;
-        lblHeader.setText("Edit Footwear");
+        labelHeader.setText("Edit Footwear");
         selectFootwear();
         setRadioButtonsInvisible();
 
@@ -116,9 +117,9 @@ public class EditProductsController {
     @FXML
     private void selectClothing() {
         setElementsDisabled(false);
-        txtSize.clear();
-        txtSize.setVisible(false);
-        lblSizes.setText("Measurement:");
+        labelSize.clear();
+        labelSize.setVisible(false);
+        labelSizes.setText("Measurement:");
     }
 
 
@@ -128,9 +129,9 @@ public class EditProductsController {
     @FXML
     private void selectFootwear() {
         setElementsDisabled(false);
-        txtMeasurement.clear();
-        txtMeasurement.setVisible(false);
-        lblSizes.setText("Size:");
+        inputMeasurement.clear();
+        inputMeasurement.setVisible(false);
+        labelSizes.setText("Size:");
     }
 
     /**
@@ -138,22 +139,22 @@ public class EditProductsController {
      * Used to prevent user to choose Clothing or Footwear.
      */
     private void setElementsDisabled(boolean value) {
-        txtProductName.setDisable(value);
-        txtPrice.setDisable(value);
-        txtStockLevel.setDisable(value);
-        btnSubmit.setDisable(value);
-        btnClear.setDisable(value);
-        txtMeasurement.setVisible(!value);
-        txtSize.setVisible(!value);
+        inputProductName.setDisable(value);
+        inputPrice.setDisable(value);
+        inputStockLevel.setDisable(value);
+        buttonSubmit.setDisable(value);
+        buttonClear.setDisable(value);
+        inputMeasurement.setVisible(!value);
+        labelSize.setVisible(!value);
     }
 
     /**
      * Set Radio Buttons to invisible when editing existing Product.
      */
     private void setRadioButtonsInvisible() {
-        rb_clothing.setVisible(false);
-        rb_footwear.setVisible(false);
-        lblType.setVisible(false);
+        radioButtonClothing.setVisible(false);
+        radioButtonFootwear.setVisible(false);
+        labelType.setVisible(false);
     }
 
     /**
@@ -162,11 +163,11 @@ public class EditProductsController {
      * @param clothing Clothing object.
      */
     private void displayProduct(Clothing clothing) {
-        txtProductId.setText(String.valueOf(clothing.getProductId()));
-        txtProductName.setText(clothing.getProductName());
-        txtPrice.setText(String.valueOf(clothing.getPrice()));
-        txtStockLevel.setText(String.valueOf(clothing.getStockLevel()));
-        txtMeasurement.setText(clothing.getMeasurement());
+        inputProductId.setText(String.valueOf(clothing.getProductId()));
+        inputProductName.setText(clothing.getProductName());
+        inputPrice.setText(String.valueOf(clothing.getPrice()));
+        inputStockLevel.setText(String.valueOf(clothing.getStockLevel()));
+        inputMeasurement.setText(clothing.getMeasurement());
     }
 
     /**
@@ -175,11 +176,11 @@ public class EditProductsController {
      * @param footwear Footwear object.
      */
     private void displayProduct(Footwear footwear) {
-        txtProductId.setText(String.valueOf(footwear.getProductId()));
-        txtProductName.setText(footwear.getProductName());
-        txtPrice.setText(String.valueOf(footwear.getPrice()));
-        txtStockLevel.setText(String.valueOf(footwear.getStockLevel()));
-        txtSize.setText(String.valueOf(footwear.getSize()));
+        inputProductId.setText(String.valueOf(footwear.getProductId()));
+        inputProductName.setText(footwear.getProductName());
+        inputPrice.setText(String.valueOf(footwear.getPrice()));
+        inputStockLevel.setText(String.valueOf(footwear.getStockLevel()));
+        labelSize.setText(String.valueOf(footwear.getSize()));
     }
 
 
@@ -190,7 +191,7 @@ public class EditProductsController {
     private void saveProduct() throws SQLException {
 
         // Validate user input
-        ProductValidation result = ProductValidation.validResult(txtProductName.getText(), txtPrice.getText(), txtStockLevel.getText(), txtMeasurement.getText(), txtSize.getText());
+        ProductValidation result = ProductValidation.validResult(inputProductName.getText(), inputPrice.getText(), inputStockLevel.getText(), inputMeasurement.getText(), labelSize.getText());
 
         // Checks if Clothing or Footwear object is not null then will update existing Product
         // otherwise will save a new Product into database.
@@ -201,7 +202,7 @@ public class EditProductsController {
                 saveNewProduct();
             }
         } else {
-            lblStatus.setText(result.getErrorMessage());
+            LabelStatusService.getError(labelStatus, result.getErrorMessage());
         }
     }
 
@@ -210,10 +211,10 @@ public class EditProductsController {
      * Indicates when {@see btnSubmit} is press.
      */
     private void saveNewProduct() {
-        if (productNotInDb(txtProductName.getText().trim())) {
+        if (productNotInDb(inputProductName.getText().trim())) {
             insertNewProduct();
         } else {
-            lblStatus.setText("Error: Product name already exist");
+            LabelStatusService.getError(labelStatus, "Error: Product name already exist");
         }
     }
 
@@ -243,10 +244,10 @@ public class EditProductsController {
 
 
     private void insertNewProduct() {
-        String productName = txtProductName.getText().trim();
-        double price = Double.parseDouble(txtPrice.getText().trim());
-        int stockLevel = Integer.parseInt(txtStockLevel.getText().trim());
-        String measurement = txtMeasurement.getText().trim();
+        String productName = inputProductName.getText().trim();
+        double price = Double.parseDouble(inputPrice.getText().trim());
+        int stockLevel = Integer.parseInt(inputStockLevel.getText().trim());
+        String measurement = inputMeasurement.getText().trim();
 
         String sql = "INSERT INTO " + ProductsEntry.TABLE_NAME + "("
                 + ProductsEntry.COLUMN_PRODUCT_NAME + ", "
@@ -263,51 +264,56 @@ public class EditProductsController {
             pstmt.setInt(3, stockLevel);
             pstmt.setString(4, measurement);
 
-            if (txtSize.getText().isEmpty()) {
+            if (labelSize.getText().isEmpty()) {
                 pstmt.setString(5, null);
             } else {
-                pstmt.setInt(5, Integer.parseInt(txtSize.getText().trim()));
+                pstmt.setInt(5, Integer.parseInt(labelSize.getText().trim()));
             }
 
-            pstmt.executeUpdate();
+            int row = pstmt.executeUpdate();
 
-            lblStatus.setText("Product added successful");
-            clear();
+            if (row == 1) {
+                LabelStatusService.getConfirmation(labelStatus, "Product added successful");
+                clear();
+            } else {
+                LabelStatusService.getConfirmation(labelStatus, "Error: Could not add new product");
+            }
+
         } catch (SQLException e) {
-            lblStatus.setText(e.getMessage());
+            LabelStatusService.getError(labelStatus, e.getMessage());
         }
     }
 
 
     /**
-     * Indicates when {@see btnSubmit} is press.
+     * Indicates when {@see buttonSubmit} is press.
      * Get user input, compare it with passed {@see clothing} object and if is differentthen update existing Product
      * in database.
      */
     private void updateEditedProduct() throws SQLException {
 
-        int productId = Integer.parseInt(txtProductId.getText());
-        String productName = txtProductName.getText().trim();
-        double price = Double.parseDouble(txtPrice.getText().trim());
-        int stockLevel = Integer.parseInt(txtStockLevel.getText().trim());
+        int productId = Integer.parseInt(inputProductId.getText());
+        String productName = inputProductName.getText().trim();
+        double price = Double.parseDouble(inputPrice.getText().trim());
+        int stockLevel = Integer.parseInt(inputStockLevel.getText().trim());
 
         if (clothing != null) {
-            String measurement = txtMeasurement.getText().trim();
+            String measurement = inputMeasurement.getText().trim();
             Clothing currentClothing = new Clothing(productId, productName, price, stockLevel, measurement);
 
             // Compare Clothing objects
             if (CompareObjects.compare(currentClothing, clothing)) {
-                lblStatus.setText("No changes has been made");
+                LabelStatusService.getError(labelStatus, "No changes has been made");
             } else {
                 updateDb();
             }
         } else if (footwear != null) {
-            int size = Integer.parseInt(txtSize.getText().trim());
+            int size = Integer.parseInt(labelSize.getText().trim());
             Footwear currentFootwear = new Footwear(productId, productName, price, stockLevel, size);
 
             // Compare Footwear objects.
             if (CompareObjects.compare(currentFootwear, footwear)) {
-                lblStatus.setText("No changes has been made");
+                LabelStatusService.getError(labelStatus, "No changes has been made");
             } else {
                 updateDb();
             }
@@ -332,25 +338,30 @@ public class EditProductsController {
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             // Set the corresponding param
-            pstmt.setString(1, txtProductName.getText().trim());
-            pstmt.setDouble(2, Double.parseDouble(txtPrice.getText().trim()));
-            pstmt.setInt(3, Integer.parseInt(txtStockLevel.getText().trim()));
-            pstmt.setString(4, txtMeasurement.getText().trim());
+            pstmt.setString(1, inputProductName.getText().trim());
+            pstmt.setDouble(2, Double.parseDouble(inputPrice.getText().trim()));
+            pstmt.setInt(3, Integer.parseInt(inputStockLevel.getText().trim()));
+            pstmt.setString(4, inputMeasurement.getText().trim());
 
-            if (txtSize.getText().isEmpty()) {
+            if (labelSize.getText().isEmpty()) {
                 pstmt.setString(5, null);
             } else {
-                pstmt.setInt(5, Integer.parseInt(txtSize.getText().trim()));
+                pstmt.setInt(5, Integer.parseInt(labelSize.getText().trim()));
             }
 
-            pstmt.setInt(6, Integer.parseInt(txtProductId.getText()));
+            pstmt.setInt(6, Integer.parseInt(inputProductId.getText()));
 
-            // Update
-            pstmt.executeUpdate();
+            int row = pstmt.executeUpdate();
 
-            lblStatus.setText("Product updated successful");
+            if (row == 1) {
+                LabelStatusService.getConfirmation(labelStatus, "Product updated successful");
+                clear();
+            } else {
+                LabelStatusService.getConfirmation(labelStatus, "Error: Could not update product");
+            }
+
         } catch (SQLException e) {
-            lblStatus.setText(e.getMessage());
+            LabelStatusService.getConfirmation(labelStatus, e.getMessage());
         }
     }
 
@@ -359,11 +370,11 @@ public class EditProductsController {
      * Indicates when {@see btnClear} is pressed.
      */
     public void clear() {
-        txtProductName.clear();
-        txtPrice.clear();
-        txtStockLevel.clear();
-        txtMeasurement.clear();
-        txtSize.clear();
+        inputProductName.clear();
+        inputPrice.clear();
+        inputStockLevel.clear();
+        inputMeasurement.clear();
+        labelSize.clear();
     }
 
     /**

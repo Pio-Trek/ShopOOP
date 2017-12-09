@@ -4,27 +4,28 @@ import data.ShopContract.StaffEntry;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import models.Staff;
 import service.ControllerService;
+import service.LabelStatusService;
 import service.LoginService;
 import service.StageService;
 import validation.LoginValidation;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 
 public class StaffLoginController {
 
     @FXML
-    private Label lblLoginStatus;
+    private Label labelStatus;
     @FXML
-    private TextField txtUsername;
+    private TextField inputUsername;
     @FXML
-    private TextField txtPassword;
+    private PasswordField inputPassword;
     private StageService stage = new StageService();
 
     /**
@@ -35,23 +36,24 @@ public class StaffLoginController {
     private void login(ActionEvent actionEvent) throws IOException {
 
         // Validate user input
-        LoginValidation result = LoginValidation.validResult(txtUsername.getText(), txtPassword.getText());
+        LoginValidation result = LoginValidation.validResult(inputUsername.getText(), inputPassword.getText());
         if (result.isValid()) {
             // Execute the SQL query and try to find user
             LoginService login = new LoginService();
-            boolean isAuthorized = login.execute(StaffEntry.TABLE_NAME, txtUsername.getText(), txtPassword.getText());
+            boolean isAuthorized = login.execute(StaffEntry.TABLE_NAME,
+                    inputUsername.getText(), inputPassword.getText());
 
             // If user found in database then create a new Customer object
             if (isAuthorized) {
-                Staff staff = login.staff();
+                Staff staff = login.getStaff();
                 if (staff != null)
                     stage.loadStage(actionEvent, staff, ControllerService.STAFF_HOME);
             } else {
-                lblLoginStatus.setText("Login Failed");
+                LabelStatusService.getError(labelStatus, "Login Failed");
             }
 
         } else {
-            lblLoginStatus.setText(result.getErrorMessage());
+            LabelStatusService.getError(labelStatus, result.getErrorMessage());
         }
 
     }

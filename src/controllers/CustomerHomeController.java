@@ -12,7 +12,7 @@ import java.io.IOException;
 public class CustomerHomeController {
 
     @FXML
-    private Label lblWelcome;
+    private Label labelWelcome;
     private Customer customer;
     private StageService stage = new StageService();
 
@@ -23,7 +23,16 @@ public class CustomerHomeController {
      */
     public void initialize(Customer customer) {
         this.customer = customer;
-        lblWelcome.setText("Welcome " + customer.getFirstName() + " " + customer.getLastName());
+        labelWelcome.setText("Welcome " + customer.getFirstName() + " " + customer.getLastName());
+    }
+
+    /**
+     * Edit Customer button action.
+     * Opens a new stage {@link EditCustomerController}
+     */
+    @FXML
+    private void editCustomer(ActionEvent actionEvent) throws IOException {
+        stage.loadStage(actionEvent, customer, ControllerService.EDIT_CUSTOMER);
     }
 
     /**
@@ -34,4 +43,5 @@ public class CustomerHomeController {
     private void logout(ActionEvent actionEvent) throws IOException {
         stage.loadStage(actionEvent, ControllerService.CUSTOMER_LOGIN);
     }
+
 }

@@ -11,7 +11,7 @@
 	<children>
 		<AnchorPane maxHeight="-1.0" maxWidth="-1.0" VBox.vgrow="ALWAYS">
 			<children>
-				<Label fx:id="lblHeader" alignment="CENTER" layoutY="48.0" prefHeight="44.0" prefWidth="770.0"
+				<Label fx:id="labelHeader" alignment="CENTER" layoutY="48.0" prefHeight="44.0" prefWidth="770.0"
 				       style="&#10;" text="" textAlignment="CENTER">
 					<font>
 						<Font size="36.0"/>
@@ -22,24 +22,24 @@
 						<Font size="24.0"/>
 					</font>
 				</Button>
-				<Button fx:id="btnSubmit" layoutX="243.0" layoutY="504.0" mnemonicParsing="false"
+				<Button fx:id="buttonSubmit" layoutX="243.0" layoutY="504.0" mnemonicParsing="false"
 				        onAction="#saveProduct" text="Submit">
 					<font>
 						<Font size="24.0"/>
 					</font>
 				</Button>
-				<Button fx:id="btnClear" layoutX="429.0" layoutY="504.0" mnemonicParsing="false" onAction="#clear"
+				<Button fx:id="buttonClear" layoutX="429.0" layoutY="504.0" mnemonicParsing="false" onAction="#clear"
 				        text="Clear">
 					<font>
 						<Font size="24.0"/>
 					</font>
 				</Button>
-				<Label fx:id="lblType" layoutX="179.0" layoutY="132.0" text="Type:">
+				<Label fx:id="labelType" layoutX="179.0" layoutY="132.0" text="Type:">
 					<font>
 						<Font size="24.0"/>
 					</font>
 				</Label>
-				<RadioButton fx:id="rb_clothing" layoutX="266.0" layoutY="131.0" mnemonicParsing="false"
+				<RadioButton fx:id="radioButtonClothing" layoutX="266.0" layoutY="131.0" mnemonicParsing="false"
 				             onAction="#selectClothing" text="Clothing">
 					<font>
 						<Font size="24.0"/>
@@ -48,7 +48,7 @@
 						<ToggleGroup fx:id="productType"/>
 					</toggleGroup>
 				</RadioButton>
-				<RadioButton fx:id="rb_footwear" layoutX="417.0" layoutY="131.0" mnemonicParsing="false"
+				<RadioButton fx:id="radioButtonFootwear" layoutX="417.0" layoutY="131.0" mnemonicParsing="false"
 				             onAction="#selectFootwear" text="Footwear" toggleGroup="$productType">
 					<font>
 						<Font size="24.0"/>
@@ -59,7 +59,7 @@
 						<Font size="24.0"/>
 					</font>
 				</Label>
-				<TextField fx:id="txtProductName" layoutX="264.0" layoutY="203.0">
+				<TextField fx:id="inputProductName" layoutX="264.0" layoutY="203.0">
 					<font>
 						<Font size="24.0"/>
 					</font>
@@ -69,7 +69,7 @@
 						<Font size="24.0"/>
 					</font>
 				</Label>
-				<PriceTextField fx:id="txtPrice" layoutX="264.0" layoutY="258.0">
+				<PriceTextField fx:id="inputPrice" layoutX="264.0" layoutY="258.0">
 					<font>
 						<Font size="24.0"/>
 					</font>
@@ -79,38 +79,38 @@
 						<Font size="24.0"/>
 					</font>
 				</Label>
-				<NumberTextField fx:id="txtStockLevel" layoutX="264.0" layoutY="311.0">
+				<NumberTextField fx:id="inputStockLevel" layoutX="264.0" layoutY="311.0">
 					<font>
 						<Font size="24.0"/>
 					</font>
 				</NumberTextField>
-				<Label fx:id="lblSizes" alignment="CENTER_RIGHT" layoutY="373.0" prefHeight="29.0" prefWidth="243.0"
+				<Label fx:id="labelSizes" alignment="CENTER_RIGHT" layoutY="373.0" prefHeight="29.0" prefWidth="243.0"
 				       textAlignment="CENTER">
 					<font>
 						<Font size="24.0"/>
 					</font>
 				</Label>
-				<TextField fx:id="txtMeasurement" layoutX="264.0" layoutY="365.0">
+				<TextField fx:id="inputMeasurement" layoutX="264.0" layoutY="365.0">
 					<font>
 						<Font size="24.0"/>
 					</font>
 				</TextField>
-				<NumberTextField fx:id="txtSize" layoutX="264.0" layoutY="365.0">
+				<NumberTextField fx:id="labelSize" layoutX="264.0" layoutY="365.0">
 					<font>
 						<Font size="24.0"/>
 					</font>
 				</NumberTextField>
-				<Label fx:id="lblStatus" layoutX="44.0" layoutY="580.0" textFill="RED">
+				<Label fx:id="labelStatus" layoutX="44.0" layoutY="580.0">
 					<font>
 						<Font size="24.0"/>
 					</font>
 				</Label>
-				<Label fx:id="lblId" layoutX="211.0" layoutY="155.0" text="ID:">
+				<Label fx:id="labelId" layoutX="211.0" layoutY="155.0" text="ID:">
 					<font>
 						<Font size="24.0"/>
 					</font>
 				</Label>
-				<TextField fx:id="txtProductId" disable="true" editable="false" layoutX="264.0" layoutY="147.0">
+				<TextField fx:id="inputProductId" disable="true" editable="false" layoutX="264.0" layoutY="147.0">
 					<font>
 						<Font size="24.0"/>
 					</font>

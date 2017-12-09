@@ -50,7 +50,7 @@ public class LoginService {
      *
      * @return New {@link Customer} object.
      */
-    public Customer customer() {
+    public Customer getCustomer() {
 
         try {
             String username = rs.getString(CustomerEntry.COLUMN_USERNAME);
@@ -77,7 +77,7 @@ public class LoginService {
      *
      * @return New {@link Staff} object.
      */
-    public Staff staff() {
+    public Staff getStaff() {
 
         try {
             String username = rs.getString(StaffEntry.COLUMN_USERNAME);

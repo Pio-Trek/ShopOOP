@@ -22,7 +22,7 @@ The application is still in progress and will be completed by the end of Februar
 - [ ] Orders list
 - [ ] Browse product by user
 - [ ] View user orders
-- [ ] Edit user details
+- [x] Edit user details
 - [ ] Close user account
 
 **The other requirements are unknown at this moment. The project will probably change over time.**

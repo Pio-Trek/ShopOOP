@@ -12,7 +12,7 @@ import java.io.IOException;
 public class StaffHomeController {
 
     @FXML
-    private Label lblWelcome;
+    private Label labelWelcome;
 
     private Staff staff;
     private StageService stage = new StageService();
@@ -24,7 +24,7 @@ public class StaffHomeController {
      */
     public void initialize(Staff staff) {
         this.staff = staff;
-        lblWelcome.setText("Welcome " + staff.getFirstName() + " " + staff.getLastName());
+        labelWelcome.setText("Welcome " + staff.getFirstName() + " " + staff.getLastName());
     }
 
     /**

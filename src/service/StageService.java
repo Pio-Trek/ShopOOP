@@ -24,7 +24,7 @@ import static service.ControllerService.*;
 public class StageService {
 
     private final String ICON_URL = "../views/images/store.png";
-    private final String TITLE = "Shop - Piotr Przechodzki";
+    private final String TITLE = "ShopOOP - Piotr Przechodzki";
     private final int WIDTH = 770;
     private final int HEIGHT = 645;
 
@@ -62,6 +62,13 @@ public class StageService {
         loader.setLocation(Start.class.getResource(controller));
         Parent root = loader.load();
 
+        switch (controller) {
+            case EDIT_CUSTOMER: {
+                EditCustomerController c = loader.getController();
+                c.initialize();
+            }
+        }
+
         Scene scene = new Scene(root, WIDTH, HEIGHT);
         primaryStage.setScene(scene);
         primaryStage.setTitle(TITLE);
@@ -95,6 +102,10 @@ public class StageService {
                 // Passes the {@link Customer} object to the {@link CustomerHomeController}
                 c.initialize(customer);
                 break;
+            }
+            case EDIT_CUSTOMER: {
+                EditCustomerController c = loader.getController();
+                c.initialize(customer);
             }
         }
 
