@@ -98,7 +98,7 @@ public class EditCustomerController {
             }
 
         } else {
-            LabelStatusService.getConfirmation(labelStatus, result.getErrorMessage());
+            LabelStatusService.getError(labelStatus, result.getErrorMessage());
         }
 
     }
@@ -227,6 +227,7 @@ public class EditCustomerController {
 
             if (row == 1) {
                 LabelStatusService.getConfirmation(labelStatus, "User updated successful");
+                customer = createNewCustomer();
             } else {
                 LabelStatusService.getConfirmation(labelStatus, "Error: Could not update user details");
             }
