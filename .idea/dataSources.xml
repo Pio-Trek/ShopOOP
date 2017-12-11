@@ -8,6 +8,7 @@
       <remarks>SQLite</remarks>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
       <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/src/data/ShopDB.sqlite</jdbc-url>
+      <default-dialect>TSQL</default-dialect>
       <driver-properties>
         <property name="enable_load_extension" value="true" />
       </driver-properties>

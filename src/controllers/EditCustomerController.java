@@ -208,7 +208,6 @@ public class EditCustomerController {
                 + CustomerEntry.COLUMN_POSTCODE + " = ?"
                 + " WHERE " + CustomerEntry.COLUMN_USERNAME + " = ?";
 
-
         try (Connection conn = DbManager.Connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 

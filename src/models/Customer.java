@@ -1,5 +1,7 @@
 package models;
 
+import java.util.HashMap;
+
 /**
  * Customer data model class
  */
@@ -10,6 +12,8 @@ public class Customer extends User {
     private String addressLine2;
     private String town;
     private String postcode;
+    private HashMap<Integer, Order> orders;
+    private boolean isRegistred;
 
     // Default constructor
     public Customer() {
@@ -29,21 +33,23 @@ public class Customer extends User {
         this.postcode = postcode;
     }
 
+    public void addOrder(Order o) {
+        //TODO... ADD ORDER
+    }
+
+    public HashMap<Integer, Order> findAllCompleteOrders() {
+        //TODO... FIND ALL COMPLETE ORDERS
+        return orders;
+    }
+
+    public Order findLastOrder() {
+        //TODO... FIND LAST ORDERS
+        return null;
+    }
+
     // Getters
     public String getAddressLine1() {
         return addressLine1;
-    }
-
-    public String getAddressLine2() {
-        return addressLine2;
-    }
-
-    public String getTown() {
-        return town;
-    }
-
-    public String getPostcode() {
-        return postcode;
     }
 
     // Setters
@@ -51,12 +57,24 @@ public class Customer extends User {
         this.addressLine1 = addressLine1;
     }
 
+    public String getAddressLine2() {
+        return addressLine2;
+    }
+
     public void setAddressLine2(String addressLine2) {
         this.addressLine2 = addressLine2;
     }
 
+    public String getTown() {
+        return town;
+    }
+
     public void setTown(String town) {
         this.town = town;
+    }
+
+    public String getPostcode() {
+        return postcode;
     }
 
     public void setPostcode(String postcode) {

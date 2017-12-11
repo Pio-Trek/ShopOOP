@@ -62,18 +62,15 @@
     </column>
     <index id="21" parent="6" name="Customers_PrimaryKey">
       <ColNames>Username</ColNames>
-      <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
     <index id="22" parent="6" name="sqlite_autoindex_Customers_1">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>Username</ColNames>
-      <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
     <index id="23" parent="6" name="Customers_Postcode">
       <ColNames>Postcode</ColNames>
-      <ColumnCollations></ColumnCollations>
     </index>
     <key id="24" parent="6">
       <ColNames>Username</ColNames>
@@ -107,22 +104,18 @@
     </column>
     <index id="31" parent="7" name="OrderLines_PrimaryKey">
       <ColNames>&apos;OrderLineId&apos;</ColNames>
-      <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
     <index id="32" parent="7" name="sqlite_autoindex_OrderLines_1">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>OrderLineId</ColNames>
-      <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
     <index id="33" parent="7" name="OrderLines_OrderId">
       <ColNames>&apos;OrderId&apos;</ColNames>
-      <ColumnCollations></ColumnCollations>
     </index>
     <index id="34" parent="7" name="OrderLines_ProductId">
       <ColNames>&apos;ProductId&apos;</ColNames>
-      <ColumnCollations></ColumnCollations>
     </index>
     <key id="35" parent="7">
       <ColNames>OrderLineId</ColNames>
@@ -158,18 +151,15 @@
     </column>
     <index id="42" parent="8" name="Orders_PrimaryKey">
       <ColNames>&apos;OrderId&apos;</ColNames>
-      <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
     <index id="43" parent="8" name="sqlite_autoindex_Orders_1">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>OrderId</ColNames>
-      <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
     <index id="44" parent="8" name="Orders_CustomerId">
       <ColNames>Username</ColNames>
-      <ColumnCollations></ColumnCollations>
     </index>
     <key id="45" parent="8">
       <ColNames>OrderId</ColNames>
@@ -210,13 +200,11 @@
     </column>
     <index id="53" parent="9" name="Products_PrimaryKey">
       <ColNames>ProductId</ColNames>
-      <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
     <index id="54" parent="9" name="sqlite_autoindex_Products_1">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>ProductId</ColNames>
-      <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
     <key id="55" parent="9">
@@ -259,13 +247,11 @@
     </column>
     <index id="63" parent="10" name="Staff_PrimaryKey">
       <ColNames>Username</ColNames>
-      <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
     <index id="64" parent="10" name="sqlite_autoindex_Staff_1">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>Username</ColNames>
-      <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
     <key id="65" parent="10">

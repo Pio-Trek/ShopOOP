@@ -24,7 +24,8 @@ public class StaffHomeController {
      */
     public void initialize(Staff staff) {
         this.staff = staff;
-        labelWelcome.setText("Welcome " + staff.getFirstName() + " " + staff.getLastName());
+        //Staff.displayGreeting(labelWelcome, staff);
+        labelWelcome.setText(staff.displayGreeting());
     }
 
     /**
