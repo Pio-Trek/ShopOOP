@@ -18,12 +18,6 @@ public class Product {
         this.stockLevel = 0;
     }
 
-    // Overloaded constructor used only to display in a ListView in {@link ViewProductsController}
-    public Product(int productId, String productName) {
-        this.productId = productId;
-        this.productName = productName;
-    }
-
     // Overloaded constructor
     public Product(int productId, String productName, double price, int stockLevel) {
         this.productId = productId;

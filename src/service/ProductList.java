@@ -43,8 +43,11 @@ public class ProductList {
             while (rs.next()) {
                 int id = rs.getInt(ProductsEntry.COLUMN_PRODUCT_ID);
                 String name = rs.getString(ProductsEntry.COLUMN_PRODUCT_NAME);
+                double price = rs.getDouble(ProductsEntry.COLUMN_PRICE);
+                int stockLevel = rs.getInt(ProductsEntry.COLUMN_STOCK_LEVEL);
 
-                productList.add(new Product(id, name));
+
+                productList.add(new Product(id, name, price, stockLevel));
             }
 
             return productList;

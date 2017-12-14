@@ -1,6 +1,8 @@
 package controllers;
 
 import data.ShopContract.ProductsEntry;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -12,14 +14,18 @@ import service.StageService;
 
 import java.io.IOException;
 import java.sql.*;
-import java.util.*;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.UUID;
 
 public class ViewProductsController {
 
     private final List<String> categoryList = ProductList.getCategoryList();
     private final List<Integer> quantityNumbers = ProductList.getQuantityNumbers();
 
-    private Map<Product, Integer> userBasket = new HashMap<>();
+    private ObservableList<OrderLine> userBasket = FXCollections.observableArrayList();
+    //private Map<Product, Integer> userBasket = new HashMap<>();
 
     @FXML
     private Button buttonEditProduct;
@@ -263,8 +269,10 @@ public class ViewProductsController {
         Product selected = listViewProduct.getSelectionModel().getSelectedItem();
         int selectedId = selected.getProductId();
         String selectedName = selected.getProductName();
+        double selectedPrice = selected.getPrice();
+        int selectedStockLevel = selected.getStockLevel();
 
-        return new Product(selectedId, selectedName);
+        return new Product(selectedId, selectedName, selectedPrice, selectedStockLevel);
     }
 
 
@@ -279,15 +287,22 @@ public class ViewProductsController {
 
     @FXML
     private void addToBasket() {
+        int quantity = comboBoxQuantity.getValue();
+        double total = currentProduct().getPrice() * quantity;
+
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Product added to basket");
         alert.setHeaderText(null);
         alert.setContentText("I have added: " + currentProduct().getProductName()
+                + "\nPrice: " + currentProduct().getPrice()
                 + "\nQuantity: " + comboBoxQuantity.getValue());
 
         alert.showAndWait();
 
-        userBasket.put(currentProduct(), comboBoxQuantity.getValue());
+        UUID uniqueID = UUID.randomUUID();
+
+        userBasket.add(new OrderLine(uniqueID.toString(), quantity, total, currentProduct()));
+
     }
 
     @FXML

@@ -1,55 +1,65 @@
 package controllers;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.util.Callback;
-import models.Product;
-
-import java.util.HashMap;
-import java.util.Map;
+import models.OrderLine;
 
 public class CustomerBasketController {
-    @FXML
-    private TableView<Map.Entry<Product, Integer>> tableViewBasket;
-    @FXML
-    private TableColumn<Map.Entry<Product, Integer>, String> tableColumnId;
-    @FXML
-    private TableColumn<Product, String> tableColumnName;
-    @FXML
-    private TableColumn<Product, Double> tableColumnPrice;
-    @FXML
-    private TableColumn<Product, Integer> tableColumnQuantity;
 
-    private Map<Product, Integer> basket = new HashMap<>();
+    private final String POUND_SYMBOL = "\u00A3 ";
+
+    @FXML
+    private TableView<OrderLine> tableViewBasket;
+    @FXML
+    private TableColumn<OrderLine, Integer> tableColumnId;
+    @FXML
+    private TableColumn<OrderLine, String> tableColumnName;
+    @FXML
+    private TableColumn<OrderLine, String> tableColumnPrice;
+    @FXML
+    private TableColumn<OrderLine, Integer> tableColumnQuantity;
+    @FXML
+    private TableColumn<OrderLine, String> tableColumnTotal;
+    @FXML
+    private Label labelTotal;
+
+    private ObservableList<OrderLine> basket = FXCollections.observableArrayList();
 
 
-    public void initialize(Map<Product, Integer> basket) {
+    public void initialize(ObservableList<OrderLine> basket) {
         this.basket = basket;
 
-        tableColumnId = new TableColumn<>("Key");
-        tableColumnId.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Map.Entry<Product, Integer>, String>, ObservableValue<String>>() {
-            @Override
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Map.Entry<Product, Integer>, String> p) {
-                String id = String.valueOf(p.getValue().getKey().getProductId());
-                return new SimpleStringProperty(id);
-            }
-        });
+        tableColumnId.setCellValueFactory(p -> new SimpleObjectProperty<>(p.getValue().getProduct().getProductId()));
+        tableColumnName.setCellValueFactory(p -> new SimpleObjectProperty<>(p.getValue().getProduct().getProductName()));
+        tableColumnPrice.setCellValueFactory(p -> new SimpleObjectProperty<>(POUND_SYMBOL + p.getValue().getProduct().getPrice()));
+        tableColumnQuantity.setCellValueFactory(p -> new SimpleObjectProperty<>(p.getValue().getQuantity()));
+        tableColumnTotal.setCellValueFactory(p -> new SimpleObjectProperty<>(POUND_SYMBOL + p.getValue().getLineTotal()));
 
+        tableViewBasket.setItems(basket);
 
-        ObservableList<Map.Entry<Product, Integer>> products = FXCollections.observableArrayList(basket.entrySet());
-        tableViewBasket = new TableView<>(products);
+        double total = basket.stream().mapToDouble(OrderLine::getLineTotal).reduce(0, (x, y) -> x + y);
 
-        tableViewBasket.getColumns().setAll(tableColumnId);
+        labelTotal.setText("Total: " + POUND_SYMBOL + String.format("%.2f", total));
+    }
+
+    @FXML
+    private void selectProduct() {
+        OrderLine ol = tableViewBasket.getSelectionModel().selectedItemProperty().get();
+        System.out.println(ol.getProduct().getProductName());
+
     }
 
     @FXML
     private void removeProductFromBasket(ActionEvent actionEvent) {
+        OrderLine model = tableViewBasket.getSelectionModel().selectedItemProperty().get();
+        basket.remove(model);
+
     }
 
     @FXML

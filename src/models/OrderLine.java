@@ -1,52 +1,43 @@
 package models;
 
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+
 /**
  * OrderLine data model class
  */
 public class OrderLine {
-    private int orderLineId;
-    private int quantity;
-    private double lineTotal;
+    private final SimpleStringProperty orderLineId;
+    private final SimpleIntegerProperty quantity;
+    private final SimpleDoubleProperty lineTotal;
     private Product product;
 
 
     // Overloaded constructor
-    public OrderLine(int orderLineId, int quantity, double lineTotal) {
-        this.orderLineId = orderLineId;
-        this.quantity = quantity;
-        this.lineTotal = lineTotal;
+    public OrderLine(String orderLineId, Integer quantity, Double lineTotal, Product product) {
+        this.orderLineId = new SimpleStringProperty(orderLineId);
+        this.quantity = new SimpleIntegerProperty(quantity);
+        this.lineTotal = new SimpleDoubleProperty(lineTotal);
+        this.product = product;
     }
 
 
     // Getters
-    public int getOrderLineId() {
-        return orderLineId;
+    public String getOrderLineId() {
+        return orderLineId.get();
     }
 
     public int getQuantity() {
-        return quantity;
+        return quantity.get();
     }
 
     public double getLineTotal() {
-        return lineTotal;
+        return lineTotal.get();
     }
 
     public Product getProduct() {
         return product;
-    }
-
-
-    // Setters
-    public void setOrderLineId(int orderLineId) {
-        this.orderLineId = orderLineId;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public void setLineTotal(double lineTotal) {
-        this.lineTotal = lineTotal;
     }
 
     public void setProduct(Product product) {

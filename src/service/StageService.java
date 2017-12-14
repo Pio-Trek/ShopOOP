@@ -1,6 +1,7 @@
 package service;
 
 import controllers.*;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -11,7 +12,6 @@ import javafx.stage.Stage;
 import models.*;
 
 import java.io.IOException;
-import java.util.Map;
 
 import static service.ControllerService.*;
 
@@ -127,7 +127,7 @@ public class StageService {
     }
 
 
-    public void loadStage(ActionEvent actionEvent, Map<Product, Integer> basket, String controller) throws IOException {
+    public void loadStage(ActionEvent actionEvent, ObservableList<OrderLine> basket, String controller) throws IOException {
 
         FXMLLoader loader = new FXMLLoader();
         Stage primaryStage = new javafx.stage.Stage();
