@@ -4,35 +4,36 @@ import data.ShopContract.ProductsEntry;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import models.Clothing;
-import models.Footwear;
-import models.Product;
-import models.Staff;
+import models.*;
 import service.ControllerService;
 import service.DbManager;
+import service.ProductList;
 import service.StageService;
 
 import java.io.IOException;
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-public class ModifyProductController {
+public class StaffProductController {
 
-    private final List<String> categoryList = List.of("Clothing", "Footwear");
+    private final List<String> categoryList = ProductList.getCategoryList();
+    private final List<Integer> quantityNumbers = ProductList.getQuantityNumbers();
 
     @FXML
     private Button buttonEditProduct;
     @FXML
     private Button buttonAddProduct;
     @FXML
+    private ComboBox<Integer> comboBoxQuantity;
+    @FXML
     private ListView<String> listViewCategory;
     @FXML
     private ListView<Product> listViewProduct = new ListView<>();
 
     private Staff staff;
+    private Customer customer;
     private StageService stage = new StageService();
 
     /**
@@ -43,14 +44,35 @@ public class ModifyProductController {
     public void initialize(Staff staff) {
         this.staff = staff;
         buttonsSetDisable();
+        setListViewProduct();
+    }
+
+    public void initialize(Customer customer) {
+        this.customer = customer;
+        buttonsSetDisable();
+        setListViewProduct();
+    }
+
+    public void initialize() {
+        buttonsSetDisable();
+        setListViewProduct();
+    }
+
+    private void setListViewProduct() {
         listViewCategory.getItems().addAll(categoryList);
         listViewCategory.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         listViewProduct.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     }
 
+    private void setComboBoxQuantity() {
+        comboBoxQuantity.getItems().addAll(quantityNumbers);
+        comboBoxQuantity.getSelectionModel().selectFirst();
+        comboBoxQuantity.setVisibleRowCount(5);
+    }
+
     /**
      * Mouse event handler for the Category column.
-     * Get Product list from database and populate it in Product column as a List of Strings.
+     * Populate products list in Product column as a List of Strings.
      */
     @FXML
     private void getProductList() {
@@ -67,23 +89,14 @@ public class ModifyProductController {
             sql = sqlQueryProducts(ProductsEntry.COLUMN_SIZE);
         }
 
-        try (Connection conn = DbManager.Connect();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+        List<Product> productList = ProductList.getFromDb(sql);
 
-            // Add product ID and name to List of Products
-            List<Product> productList = new ArrayList<>();
-            while (rs.next()) {
-                int id = rs.getInt(ProductsEntry.COLUMN_PRODUCT_ID);
-                String name = rs.getString(ProductsEntry.COLUMN_PRODUCT_NAME);
-
-                productList.add(new Product(id, name));
-            }
-
+        if (productList != null) {
             // Hold the list of Product in a ListView
             listViewProduct.getItems().addAll(productList);
 
             // Populate Product using a ListView setCellFactory() method
+
             listViewProduct.setCellFactory(lv -> new ListCell<>() {
                 @Override
                 public void updateItem(Product product, boolean empty) {
@@ -91,11 +104,7 @@ public class ModifyProductController {
                     setText(empty ? null : product.getProductName());
                 }
             });
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
         }
-
     }
 
     /**
@@ -237,7 +246,14 @@ public class ModifyProductController {
      */
     @FXML
     private void back(ActionEvent actionEvent) throws IOException {
-        stage.loadStage(actionEvent, staff, ControllerService.STAFF_HOME);
+        if (customer == null) {
+            stage.loadStage(actionEvent, staff, ControllerService.STAFF_HOME);
+        } else if (staff == null) {
+            stage.loadStage(actionEvent, customer, ControllerService.CUSTOMER_HOME);
+        } else {
+            stage.loadStage(actionEvent, ControllerService.MAIN_MENU);
+        }
+
     }
 
 }
