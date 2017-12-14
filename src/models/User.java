@@ -26,10 +26,6 @@ public class User {
         this.lastName = lastName;
     }
 
-    public String displayGreeting() {
-        return "Welcome\n" + getFirstName() + " " + getLastName();
-    }
-
     // Getters
     public String getUsername() {
         return username;

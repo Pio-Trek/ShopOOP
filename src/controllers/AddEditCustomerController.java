@@ -17,7 +17,7 @@ import validation.RegisterValidation;
 import java.io.IOException;
 import java.sql.*;
 
-public class AddOrEditCustomerController {
+public class AddEditCustomerController {
 
     @FXML
     private Label labelHeader;

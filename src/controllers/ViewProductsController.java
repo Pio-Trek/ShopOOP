@@ -12,19 +12,25 @@ import service.StageService;
 
 import java.io.IOException;
 import java.sql.*;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
-public class StaffProductController {
+public class ViewProductsController {
 
     private final List<String> categoryList = ProductList.getCategoryList();
     private final List<Integer> quantityNumbers = ProductList.getQuantityNumbers();
+
+    private Map<Product, Integer> userBasket = new HashMap<>();
 
     @FXML
     private Button buttonEditProduct;
     @FXML
     private Button buttonAddProduct;
+    @FXML
+    private Button buttonDeleteProduct;
+    @FXML
+    private Button buttonAddToBasket;
+    @FXML
+    private Button buttonViewBasket;
     @FXML
     private ComboBox<Integer> comboBoxQuantity;
     @FXML
@@ -43,18 +49,14 @@ public class StaffProductController {
      */
     public void initialize(Staff staff) {
         this.staff = staff;
-        buttonsSetDisable();
+        buttonsStaffView();
         setListViewProduct();
     }
 
     public void initialize(Customer customer) {
         this.customer = customer;
-        buttonsSetDisable();
-        setListViewProduct();
-    }
-
-    public void initialize() {
-        buttonsSetDisable();
+        setComboBoxQuantity();
+        buttonsCustomerView();
         setListViewProduct();
     }
 
@@ -76,7 +78,11 @@ public class StaffProductController {
      */
     @FXML
     private void getProductList() {
-        buttonsSetDisable();
+        if (staff != null) {
+            buttonsStaffView();
+        } else {
+            buttonsCustomerView();
+        }
 
         // Clear Product column
         listViewProduct.getItems().clear();
@@ -121,12 +127,27 @@ public class StaffProductController {
     }
 
     /**
-     * Set disable Add and Edit button, when no product is selected.
+     * Set disable buttons for Staff view and when no product is selected.
      */
-    private void buttonsSetDisable() {
-        if (!buttonAddProduct.isDisable() && !buttonEditProduct.isDisable()) {
-            buttonAddProduct.setDisable(true);
-            buttonEditProduct.setDisable(true);
+    private void buttonsStaffView() {
+        buttonsStaffViewVisible(true);
+
+        if (!buttonDeleteProduct.isDisable() && !buttonEditProduct.isDisable()) {
+            buttonsSetDisable(true);
+        } else if (listViewProduct.getSelectionModel().getSelectedItem() != null) {
+            buttonsSetDisable(false);
+        }
+    }
+
+    private void buttonsCustomerView() {
+        buttonsStaffViewVisible(false);
+
+        if (!buttonAddToBasket.isDisable()
+                && !buttonViewBasket.isDisable()
+                && !comboBoxQuantity.isDisable()) {
+            buttonsSetDisable(true);
+        } else if (listViewProduct.getSelectionModel().getSelectedItem() != null) {
+            buttonsSetDisable(false);
         }
     }
 
@@ -137,9 +158,25 @@ public class StaffProductController {
     @FXML
     private void buttonsSetEnable() {
         if (listViewProduct.getSelectionModel().getSelectedItem() != null) {
-            buttonAddProduct.setDisable(false);
-            buttonEditProduct.setDisable(false);
+            buttonsSetDisable(false);
         }
+    }
+
+    private void buttonsSetDisable(boolean value) {
+        buttonDeleteProduct.setDisable(value);
+        buttonEditProduct.setDisable(value);
+        comboBoxQuantity.setDisable(value);
+        buttonAddToBasket.setDisable(value);
+        buttonViewBasket.setDisable(value);
+    }
+
+    private void buttonsStaffViewVisible(boolean value) {
+        comboBoxQuantity.setVisible(!value);
+        buttonAddToBasket.setVisible(!value);
+        buttonViewBasket.setVisible(!value);
+        buttonAddProduct.setVisible(value);
+        buttonEditProduct.setVisible(value);
+        buttonDeleteProduct.setVisible(value);
     }
 
     /**
@@ -236,8 +273,26 @@ public class StaffProductController {
      * Opens a new stage {@link EditProductsController}
      */
     @FXML
-    private void addProduct(ActionEvent actionEvent) throws IOException {
+    private void addNewProduct(ActionEvent actionEvent) throws IOException {
         stage.loadStage(actionEvent, staff, ControllerService.EDIT_PRODUCTS);
+    }
+
+    @FXML
+    private void addToBasket() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Product added to basket");
+        alert.setHeaderText(null);
+        alert.setContentText("I have added: " + currentProduct().getProductName()
+                + "\nQuantity: " + comboBoxQuantity.getValue());
+
+        alert.showAndWait();
+
+        userBasket.put(currentProduct(), comboBoxQuantity.getValue());
+    }
+
+    @FXML
+    private void viewBasket(ActionEvent actionEvent) throws IOException {
+        stage.loadStage(actionEvent, userBasket, ControllerService.CUSTOMER_BASKET);
     }
 
     /**
@@ -246,14 +301,15 @@ public class StaffProductController {
      */
     @FXML
     private void back(ActionEvent actionEvent) throws IOException {
-        if (customer == null) {
+        if (staff != null) {
             stage.loadStage(actionEvent, staff, ControllerService.STAFF_HOME);
-        } else if (staff == null) {
-            stage.loadStage(actionEvent, customer, ControllerService.CUSTOMER_HOME);
         } else {
-            stage.loadStage(actionEvent, ControllerService.MAIN_MENU);
+            if (customer.isRegistered()) {
+                stage.loadStage(actionEvent, customer, ControllerService.CUSTOMER_HOME);
+            } else {
+                stage.loadStage(actionEvent, ControllerService.MAIN_MENU);
+            }
         }
-
     }
 
 }

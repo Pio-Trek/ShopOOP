@@ -382,6 +382,6 @@ public class EditProductsController {
      */
     @FXML
     private void back(ActionEvent actionEvent) throws IOException {
-        stage.loadStage(actionEvent, staff, ControllerService.MODIFY_PRODUCTS);
+        stage.loadStage(actionEvent, staff, ControllerService.VIEW_PRODUCTS);
     }
 }

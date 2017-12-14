@@ -28,4 +28,9 @@ public class MainMenuController {
     private void staffLogin(ActionEvent actionEvent) throws IOException {
         stage.loadStage(actionEvent, ControllerService.STAFF_LOGIN);
     }
+
+    @FXML
+    private void viewProducts(ActionEvent actionEvent) throws IOException {
+        stage.loadStage(actionEvent, ControllerService.VIEW_PRODUCTS);
+    }
 }

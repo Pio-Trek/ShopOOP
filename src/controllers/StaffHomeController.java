@@ -24,17 +24,16 @@ public class StaffHomeController {
      */
     public void initialize(Staff staff) {
         this.staff = staff;
-        //Staff.displayGreeting(labelWelcome, staff);
-        labelWelcome.setText(staff.displayGreeting());
+        labelWelcome.setText("Welcome " + staff.getFirstName() + " " + staff.getLastName());
     }
 
     /**
      * Modify Products button action.
-     * Opens a new stage {@link ModifyProductController}
+     * Opens a new stage {@link ViewProductsController}
      */
     @FXML
     private void modifyProducts(ActionEvent actionEvent) throws IOException {
-        stage.loadStage(actionEvent, staff, ControllerService.MODIFY_PRODUCTS);
+        stage.loadStage(actionEvent, staff, ControllerService.VIEW_PRODUCTS);
     }
 
     /**

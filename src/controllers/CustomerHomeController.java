@@ -31,25 +31,16 @@ public class CustomerHomeController {
      */
     public void initialize(Customer customer) {
         this.customer = customer;
-        labelWelcome.setText(customer.displayGreeting(customer));
+        labelWelcome.setText("Welcome " + customer.getFirstName() + " " + customer.getLastName());
     }
 
     /**
      * Edit Customer button action.
-     * Opens a new stage {@link EditCustomerController}
+     * Opens a new stage {@link AddEditCustomerController}
      */
     @FXML
     private void editCustomer(ActionEvent actionEvent) throws IOException {
-        stage.loadStage(actionEvent, customer, ControllerService.EDIT_CUSTOMER);
-    }
-
-    /**
-     * Log out button action.
-     * Opens a new stage {@link CustomerLoginController}
-     */
-    @FXML
-    private void logout(ActionEvent actionEvent) throws IOException {
-        stage.loadStage(actionEvent, ControllerService.CUSTOMER_LOGIN);
+        stage.loadStage(actionEvent, customer, ControllerService.ADD_EDIT_CUSTOMER);
     }
 
     @FXML
@@ -82,5 +73,23 @@ public class CustomerHomeController {
                 System.out.println(e.getMessage());
             }
         }
+    }
+
+    @FXML
+    private void viewOrders(ActionEvent actionEvent) {
+    }
+
+    @FXML
+    private void viewProducs(ActionEvent actionEvent) throws IOException {
+        stage.loadStage(actionEvent, customer, ControllerService.VIEW_PRODUCTS);
+    }
+
+    /**
+     * Log out button action.
+     * Opens a new stage {@link CustomerLoginController}
+     */
+    @FXML
+    private void logout(ActionEvent actionEvent) throws IOException {
+        stage.loadStage(actionEvent, ControllerService.CUSTOMER_LOGIN);
     }
 }

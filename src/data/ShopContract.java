@@ -6,9 +6,10 @@ package data;
 public final class ShopContract {
 
     /**
-     * Empty constructor to prevent from accidentally instantiating the contract class
+     * Constructor to prevent from accidentally instantiating the contract class
      */
-    public ShopContract() {
+    private ShopContract() {
+        throw new IllegalStateException("Must not instantiate an element of this class");
     }
 
 

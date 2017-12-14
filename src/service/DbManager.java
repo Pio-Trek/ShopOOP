@@ -18,7 +18,7 @@ public class DbManager {
 
         String url;
 
-        // Checks what type of Operation System is used and change url to a database file
+        // Checks what type of Operation System is used and change URL to a database file
         String OS = (System.getProperty("os.name")).toUpperCase();
 
         if (OS.contains("WIN")) {

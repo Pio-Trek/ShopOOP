@@ -4,30 +4,23 @@ package models;
  * OrderLine data model class
  */
 public class OrderLine {
-    private int orderLieId;
+    private int orderLineId;
     private int quantity;
     private double lineTotal;
-
-
-    // Default constructor
-    public OrderLine() {
-        this.orderLieId = 0;
-        this.quantity = 0;
-        this.lineTotal = 0;
-    }
+    private Product product;
 
 
     // Overloaded constructor
-    public OrderLine(int orderLieId, int quantity, double lineTotal) {
-        this.orderLieId = orderLieId;
+    public OrderLine(int orderLineId, int quantity, double lineTotal) {
+        this.orderLineId = orderLineId;
         this.quantity = quantity;
         this.lineTotal = lineTotal;
     }
 
 
     // Getters
-    public int getOrderLieId() {
-        return orderLieId;
+    public int getOrderLineId() {
+        return orderLineId;
     }
 
     public int getQuantity() {
@@ -38,10 +31,14 @@ public class OrderLine {
         return lineTotal;
     }
 
+    public Product getProduct() {
+        return product;
+    }
+
 
     // Setters
-    public void setOrderLieId(int orderLieId) {
-        this.orderLieId = orderLieId;
+    public void setOrderLineId(int orderLineId) {
+        this.orderLineId = orderLineId;
     }
 
     public void setQuantity(int quantity) {
@@ -50,5 +47,9 @@ public class OrderLine {
 
     public void setLineTotal(double lineTotal) {
         this.lineTotal = lineTotal;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 }

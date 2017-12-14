@@ -77,11 +77,11 @@ public class CustomerLoginController {
 
     /**
      * Register button action.
-     * Opens a new stage {@link EditCustomerController}
+     * Opens a new stage {@link AddEditCustomerController}
      */
     @FXML
     private void register(ActionEvent actionEvent) throws IOException {
-        stage.loadStage(actionEvent, ControllerService.EDIT_CUSTOMER);
+        stage.loadStage(actionEvent, ControllerService.ADD_EDIT_CUSTOMER);
     }
 
     /**

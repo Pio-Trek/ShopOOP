@@ -1,6 +1,7 @@
 package models;
 
 import java.util.Date;
+import java.util.HashMap;
 
 /**
  * Order data model class
@@ -10,6 +11,7 @@ public class Order {
     private Date orderDate;
     private double orderTotal;
     private String status;
+    private HashMap<Integer, OrderLine> orderLines;
 
     // Default constructor
     public Order() {
@@ -25,6 +27,24 @@ public class Order {
         this.orderDate = orderDate;
         this.orderTotal = orderTotal;
         this.status = status;
+    }
+
+    public void addOrderLine(OrderLine ol, boolean isRegistered) {
+        //TODO... ADD ORDER LINE
+    }
+
+    public void removeOrderLine(int productId, boolean isRegistered) {
+        //TODO... REMOVE ORDER LINE
+    }
+
+    public int getQuantityOfProduct(int productId) {
+        //TODO... GET QUANTITY OF PRODUCT
+        return 0;
+    }
+
+    public int generateUniqueOrderLineId() {
+        //TODO... Generate Unique Order Line ID
+        return 0;
     }
 
 
@@ -45,6 +65,10 @@ public class Order {
         return status;
     }
 
+    public HashMap<Integer, OrderLine> getOrderLines() {
+        return orderLines;
+    }
+
 
     // Setters
     public void setOrderId(int orderId) {
@@ -61,5 +85,9 @@ public class Order {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public void setOrderLines(HashMap<Integer, OrderLine> orderLines) {
+        this.orderLines = orderLines;
     }
 }

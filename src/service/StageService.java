@@ -8,12 +8,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import models.Clothing;
-import models.Customer;
-import models.Footwear;
-import models.Staff;
+import models.*;
 
 import java.io.IOException;
+import java.util.Map;
 
 import static service.ControllerService.*;
 
@@ -63,9 +61,11 @@ public class StageService {
         Parent root = loader.load();
 
         switch (controller) {
-            case EDIT_CUSTOMER: {
-                EditCustomerController c = loader.getController();
-                c.initialize();
+            case VIEW_PRODUCTS: {
+                ViewProductsController c = loader.getController();
+                Customer anonymousCustomer = new Customer();
+                c.initialize(anonymousCustomer);
+                break;
             }
         }
 
@@ -98,14 +98,47 @@ public class StageService {
         switch (controller) {
             case CUSTOMER_HOME: {
                 CustomerHomeController c = loader.getController();
-
                 // Passes the {@link Customer} object to the {@link CustomerHomeController}
                 c.initialize(customer);
                 break;
             }
-            case EDIT_CUSTOMER: {
-                EditCustomerController c = loader.getController();
+            // Edit current Customer details
+            case ADD_EDIT_CUSTOMER: {
+                AddEditCustomerController c = loader.getController();
                 c.initialize(customer);
+                break;
+            }
+            case VIEW_PRODUCTS: {
+                ViewProductsController c = loader.getController();
+                c.initialize(customer);
+                break;
+            }
+        }
+
+
+        Scene scene = new Scene(root, WIDTH, HEIGHT);
+        primaryStage.setScene(scene);
+        primaryStage.setTitle(TITLE);
+        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream(ICON_URL)));
+        primaryStage.setResizable(false);
+        primaryStage.show();
+        // Hides previous window
+        ((Node) (actionEvent.getSource())).getScene().getWindow().hide();
+    }
+
+
+    public void loadStage(ActionEvent actionEvent, Map<Product, Integer> basket, String controller) throws IOException {
+
+        FXMLLoader loader = new FXMLLoader();
+        Stage primaryStage = new javafx.stage.Stage();
+        loader.setLocation(Start.class.getResource(controller));
+        Parent root = loader.load();
+
+        switch (controller) {
+            case CUSTOMER_BASKET: {
+                CustomerBasketController c = loader.getController();
+                c.initialize(basket);
+                break;
             }
         }
 
@@ -141,8 +174,8 @@ public class StageService {
                 c.initialize(staff);
                 break;
             }
-            case MODIFY_PRODUCTS: {
-                ModifyProductController c = loader.getController();
+            case VIEW_PRODUCTS: {
+                ViewProductsController c = loader.getController();
                 c.initialize(staff);
                 break;
             }
