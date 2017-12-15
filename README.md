@@ -20,10 +20,10 @@ The application is still in progress and will be completed by the end of Februar
 - [x] Validate adding and editing products
 - [x] List of categories and products (staff)
 - [ ] Orders list
-- [ ] Browse product by user
-- [ ] View user orders
-- [x] Edit user details
-- [ ] Close user account
+- [x] Customer and Guest can browse product list
+- [ ] View Customer orders
+- [x] Edit Customer details
+- [x] Close Customer account
 
 **The other requirements are unknown at this moment. The project will probably change over time.**
 
