@@ -127,7 +127,7 @@ public class StageService {
     }
 
 
-    public void loadStage(ActionEvent actionEvent, ObservableList<OrderLine> basket, String controller) throws IOException {
+    public void loadStage(ActionEvent actionEvent, Customer customer, ObservableList<OrderLine> basket, String controller) throws IOException {
 
         FXMLLoader loader = new FXMLLoader();
         Stage primaryStage = new javafx.stage.Stage();
@@ -137,10 +137,26 @@ public class StageService {
         switch (controller) {
             case CUSTOMER_BASKET: {
                 CustomerBasketController c = loader.getController();
-                c.initialize(basket);
+                c.initialize(customer, basket);
+                break;
+            }
+            case VIEW_PRODUCTS: {
+                ViewProductsController c = loader.getController();
+                c.initialize(customer, basket);
+                break;
+            }
+            case ADD_EDIT_CUSTOMER: {
+                AddEditCustomerController c = loader.getController();
+                c.initialize(customer, basket);
+                break;
+            }
+            case CUSTOMER_LOGIN: {
+                CustomerLoginController c = loader.getController();
+                c.initialize(customer, basket);
                 break;
             }
         }
+
 
 
         Scene scene = new Scene(root, WIDTH, HEIGHT);

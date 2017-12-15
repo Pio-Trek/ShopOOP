@@ -2,21 +2,20 @@ package models;
 
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
 
 /**
  * OrderLine data model class
  */
 public class OrderLine {
-    private final SimpleStringProperty orderLineId;
+    //private final SimpleIntegerProperty orderLineId;
     private final SimpleIntegerProperty quantity;
     private final SimpleDoubleProperty lineTotal;
     private Product product;
 
 
     // Overloaded constructor
-    public OrderLine(String orderLineId, Integer quantity, Double lineTotal, Product product) {
-        this.orderLineId = new SimpleStringProperty(orderLineId);
+    public OrderLine(Integer quantity, Double lineTotal, Product product) {
+        //this.orderLineId = new SimpleIntegerProperty(orderLineId);
         this.quantity = new SimpleIntegerProperty(quantity);
         this.lineTotal = new SimpleDoubleProperty(lineTotal);
         this.product = product;
@@ -24,9 +23,9 @@ public class OrderLine {
 
 
     // Getters
-    public String getOrderLineId() {
+/*    public int getOrderLineId() {
         return orderLineId.get();
-    }
+    }*/
 
     public int getQuantity() {
         return quantity.get();

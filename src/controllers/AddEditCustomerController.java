@@ -1,12 +1,16 @@
 package controllers;
 
 import data.ShopContract.CustomerEntry;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import models.Customer;
+import models.OrderLine;
 import service.ControllerService;
 import service.DbManager;
 import service.LabelStatusService;
@@ -42,10 +46,18 @@ public class AddEditCustomerController {
 
     private StageService stage = new StageService();
     private Customer customer;
+    private Customer newCustomer;
+    private ObservableList<OrderLine> basket = FXCollections.observableArrayList();
 
 
     public void initialize() {
         labelHeader.setText("Register New Customer");
+    }
+
+    public void initialize(Customer customer, ObservableList<OrderLine> basket) {
+        labelHeader.setText("Register New Customer");
+        this.customer = customer;
+        this.basket = basket;
     }
 
     public void initialize(Customer customer) {
@@ -72,7 +84,7 @@ public class AddEditCustomerController {
      * if not exist then add a new row with record to a database.
      */
     @FXML
-    private void submit() throws SQLException {
+    private void submit(ActionEvent actionEvent) throws SQLException, IOException {
         RegisterValidation result = RegisterValidation.validResult(
                 inputUsername.getText(),
                 inputPassword.getText(),
@@ -85,11 +97,11 @@ public class AddEditCustomerController {
 
         if (result.isValid()) {
 
-            Customer newCustomer = createNewCustomer();
+            newCustomer = createNewCustomer();
 
-            if (customer == null) {
+            if (customer == null || !customer.isRegistered()) {
                 if (userNotInDb(inputUsername.getText().trim())) {
-                    insertNewUser(newCustomer);
+                    insertNewUser(newCustomer, actionEvent);
                 } else {
                     LabelStatusService.getConfirmation(labelStatus, "Error: Username already exist");
                 }
@@ -140,7 +152,7 @@ public class AddEditCustomerController {
         }
     }
 
-    private void insertNewUser(Customer customer) {
+    private void insertNewUser(Customer customer, ActionEvent actionEvent) throws IOException {
         String sql = "INSERT INTO " + CustomerEntry.TABLE_NAME + "("
                 + CustomerEntry.COLUMN_USERNAME + ", "
                 + CustomerEntry.COLUMN_PASSWORD + ", "
@@ -169,6 +181,9 @@ public class AddEditCustomerController {
 
             if (row == 1) {
                 LabelStatusService.getConfirmation(labelStatus, "Registration Successful");
+                if (basket != null) {
+                    backToBasket(actionEvent);
+                }
             } else {
                 LabelStatusService.getConfirmation(labelStatus, "Error: Could not create new user");
             }
@@ -234,6 +249,17 @@ public class AddEditCustomerController {
         } catch (SQLException e) {
             LabelStatusService.getError(labelStatus, e.getMessage());
         }
+    }
+
+    private void backToBasket(ActionEvent actionEvent) throws IOException {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("You are now sing in");
+        alert.setHeaderText(null);
+        alert.setContentText("Thank you for registration.\nYou will be now moved to your basket.");
+
+        alert.showAndWait();
+
+        stage.loadStage(actionEvent, newCustomer, basket, ControllerService.CUSTOMER_BASKET);
     }
 
     /**

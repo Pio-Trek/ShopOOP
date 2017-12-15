@@ -13,6 +13,8 @@ public class Order {
     private String status;
     private HashMap<Integer, OrderLine> orderLines;
 
+    //private static final int SHORT_ID_LENGTH = 8;
+
     // Default constructor
     public Order() {
         this.orderId = 0;
@@ -42,10 +44,10 @@ public class Order {
         return 0;
     }
 
-    public int generateUniqueOrderLineId() {
-        //TODO... Generate Unique Order Line ID
-        return 0;
-    }
+    // Generates 8 digits number (using 'org.apache.commons:commons-lang3:3.3.1' library)
+/*    public static int generateUniqueOrderLineId() {
+        return Integer.parseInt(RandomStringUtils.randomNumeric(SHORT_ID_LENGTH));
+    }*/
 
 
     // Getters

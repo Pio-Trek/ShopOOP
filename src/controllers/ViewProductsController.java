@@ -17,15 +17,13 @@ import java.sql.*;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.UUID;
 
 public class ViewProductsController {
 
     private final List<String> categoryList = ProductList.getCategoryList();
     private final List<Integer> quantityNumbers = ProductList.getQuantityNumbers();
 
-    private ObservableList<OrderLine> userBasket = FXCollections.observableArrayList();
-    //private Map<Product, Integer> userBasket = new HashMap<>();
+    private ObservableList<OrderLine> basket = FXCollections.observableArrayList();
 
     @FXML
     private Button buttonEditProduct;
@@ -64,6 +62,23 @@ public class ViewProductsController {
         setComboBoxQuantity();
         buttonsCustomerView();
         setListViewProduct();
+        buttonViewBasket.setDisable(true);
+    }
+
+    public void initialize(Customer customer, ObservableList<OrderLine> basket) {
+        this.customer = customer;
+        this.basket = basket;
+
+        setComboBoxQuantity();
+        buttonsCustomerView();
+        setListViewProduct();
+
+        if (basket.size() > 0) {
+            buttonViewBasket.setDisable(false);
+        } else {
+            buttonViewBasket.setDisable(true);
+        }
+
     }
 
     private void setListViewProduct() {
@@ -148,9 +163,7 @@ public class ViewProductsController {
     private void buttonsCustomerView() {
         buttonsStaffViewVisible(false);
 
-        if (!buttonAddToBasket.isDisable()
-                && !buttonViewBasket.isDisable()
-                && !comboBoxQuantity.isDisable()) {
+        if (!buttonAddToBasket.isDisable() && !comboBoxQuantity.isDisable()) {
             buttonsSetDisable(true);
         } else if (listViewProduct.getSelectionModel().getSelectedItem() != null) {
             buttonsSetDisable(false);
@@ -173,7 +186,6 @@ public class ViewProductsController {
         buttonEditProduct.setDisable(value);
         comboBoxQuantity.setDisable(value);
         buttonAddToBasket.setDisable(value);
-        buttonViewBasket.setDisable(value);
     }
 
     private void buttonsStaffViewVisible(boolean value) {
@@ -299,15 +311,13 @@ public class ViewProductsController {
 
         alert.showAndWait();
 
-        UUID uniqueID = UUID.randomUUID();
-
-        userBasket.add(new OrderLine(uniqueID.toString(), quantity, total, currentProduct()));
-
+        basket.add(new OrderLine(quantity, total, currentProduct()));
+        buttonViewBasket.setDisable(false);
     }
 
     @FXML
     private void viewBasket(ActionEvent actionEvent) throws IOException {
-        stage.loadStage(actionEvent, userBasket, ControllerService.CUSTOMER_BASKET);
+        stage.loadStage(actionEvent, customer, basket, ControllerService.CUSTOMER_BASKET);
     }
 
     /**

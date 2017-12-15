@@ -1,6 +1,8 @@
 package controllers;
 
 import data.ShopContract.CustomerEntry;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -9,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import models.Customer;
+import models.OrderLine;
 import service.ControllerService;
 import service.LabelStatusService;
 import service.LoginService;
@@ -27,10 +30,12 @@ public class CustomerLoginController {
     private PasswordField inputPassword;
     private StageService stage = new StageService();
 
-    /**
-     * Empty constructor just to add SQL exception.
-     */
-    public CustomerLoginController() {
+    private Customer customer;
+    private ObservableList<OrderLine> basket = FXCollections.observableArrayList();
+
+    public void initialize(Customer customer, ObservableList<OrderLine> basket) {
+        this.customer = customer;
+        this.basket = basket;
     }
 
     /**
@@ -51,7 +56,11 @@ public class CustomerLoginController {
             if (isAuthorized) {
                 Customer customer = login.getCustomer();
                 if (customer != null)
-                    stage.loadStage(actionEvent, customer, ControllerService.CUSTOMER_HOME);
+                    if (basket.size() > 0) {
+                        stage.loadStage(actionEvent, customer, basket, ControllerService.CUSTOMER_BASKET);
+                    } else {
+                        stage.loadStage(actionEvent, customer, ControllerService.CUSTOMER_HOME);
+                    }
             } else {
                 LabelStatusService.getError(labelStatus, "Login Failed");
             }
@@ -61,6 +70,7 @@ public class CustomerLoginController {
         }
 
     }
+
 
     /**
      * Perform an action when user press the Enter key.
@@ -81,7 +91,11 @@ public class CustomerLoginController {
      */
     @FXML
     private void register(ActionEvent actionEvent) throws IOException {
-        stage.loadStage(actionEvent, ControllerService.ADD_EDIT_CUSTOMER);
+        if (basket != null) {
+            stage.loadStage(actionEvent, customer, basket, ControllerService.ADD_EDIT_CUSTOMER);
+        } else {
+            stage.loadStage(actionEvent, ControllerService.ADD_EDIT_CUSTOMER);
+        }
     }
 
     /**
@@ -90,7 +104,11 @@ public class CustomerLoginController {
      */
     @FXML
     private void back(ActionEvent actionEvent) throws IOException {
-        stage.loadStage(actionEvent, ControllerService.MAIN_MENU);
+        if (customer != null) {
+            stage.loadStage(actionEvent, customer, basket, ControllerService.CUSTOMER_BASKET);
+        } else {
+            stage.loadStage(actionEvent, ControllerService.MAIN_MENU);
+        }
     }
 
 }
