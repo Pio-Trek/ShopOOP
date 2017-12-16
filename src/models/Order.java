@@ -1,19 +1,14 @@
 package models;
 
-import java.util.Date;
-import java.util.HashMap;
-
 /**
  * Order data model class
  */
 public class Order {
     private int orderId;
-    private Date orderDate;
+    private String orderDate;
     private double orderTotal;
     private String status;
-    private HashMap<Integer, OrderLine> orderLines;
-
-    //private static final int SHORT_ID_LENGTH = 8;
+    private String userName;
 
     // Default constructor
     public Order() {
@@ -21,41 +16,25 @@ public class Order {
         this.orderDate = null;
         this.orderTotal = 0;
         this.status = "";
+        this.userName = "";
     }
 
     // Overloaded constructor
-    public Order(int orderId, Date orderDate, double orderTotal, String status) {
+    public Order(int orderId, String orderDate, double orderTotal, String status, String userName) {
         this.orderId = orderId;
         this.orderDate = orderDate;
         this.orderTotal = orderTotal;
         this.status = status;
+        this.userName = userName;
     }
-
-    public void addOrderLine(OrderLine ol, boolean isRegistered) {
-        //TODO... ADD ORDER LINE
-    }
-
-    public void removeOrderLine(int productId, boolean isRegistered) {
-        //TODO... REMOVE ORDER LINE
-    }
-
-    public int getQuantityOfProduct(int productId) {
-        //TODO... GET QUANTITY OF PRODUCT
-        return 0;
-    }
-
-    // Generates 8 digits number (using 'org.apache.commons:commons-lang3:3.3.1' library)
-/*    public static int generateUniqueOrderLineId() {
-        return Integer.parseInt(RandomStringUtils.randomNumeric(SHORT_ID_LENGTH));
-    }*/
-
+    
 
     // Getters
     public int getOrderId() {
         return orderId;
     }
 
-    public Date getOrderDate() {
+    public String getOrderDate() {
         return orderDate;
     }
 
@@ -67,29 +46,7 @@ public class Order {
         return status;
     }
 
-    public HashMap<Integer, OrderLine> getOrderLines() {
-        return orderLines;
-    }
-
-
-    // Setters
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
-    }
-
-    public void setOrderDate(Date orderDate) {
-        this.orderDate = orderDate;
-    }
-
-    public void setOrderTotal(double orderTotal) {
-        this.orderTotal = orderTotal;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public void setOrderLines(HashMap<Integer, OrderLine> orderLines) {
-        this.orderLines = orderLines;
+    public String getUserName() {
+        return userName;
     }
 }

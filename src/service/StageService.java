@@ -113,8 +113,38 @@ public class StageService {
                 c.initialize(customer);
                 break;
             }
+            case VIEW_ORDERS: {
+                ViewOrdersController c = loader.getController();
+                c.initialize(customer);
+                break;
+            }
         }
 
+
+        Scene scene = new Scene(root, WIDTH, HEIGHT);
+        primaryStage.setScene(scene);
+        primaryStage.setTitle(TITLE);
+        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream(ICON_URL)));
+        primaryStage.setResizable(false);
+        primaryStage.show();
+        // Hides previous window
+        ((Node) (actionEvent.getSource())).getScene().getWindow().hide();
+    }
+
+    public void loadStage(ActionEvent actionEvent, Customer customer, int orderId, String controller) throws IOException {
+
+        FXMLLoader loader = new FXMLLoader();
+        Stage primaryStage = new javafx.stage.Stage();
+        loader.setLocation(Start.class.getResource(controller));
+        Parent root = loader.load();
+
+        switch (controller) {
+            case VIEW_ORDER_LINES: {
+                ViewOrderLinesController c = loader.getController();
+                c.initialize(customer, orderId);
+                break;
+            }
+        }
 
         Scene scene = new Scene(root, WIDTH, HEIGHT);
         primaryStage.setScene(scene);
@@ -158,7 +188,6 @@ public class StageService {
         }
 
 
-
         Scene scene = new Scene(root, WIDTH, HEIGHT);
         primaryStage.setScene(scene);
         primaryStage.setTitle(TITLE);
@@ -200,6 +229,11 @@ public class StageService {
                 c.initialize(staff);
                 break;
             }
+            case VIEW_ORDERS: {
+                ViewOrdersController c = loader.getController();
+                c.initialize(staff);
+                break;
+            }
         }
 
         Scene scene = new Scene(root, WIDTH, HEIGHT);
@@ -233,6 +267,31 @@ public class StageService {
             c.initialize(staff, clothing);
         } else {
             c.initialize(staff, footwear);
+        }
+
+        Scene scene = new Scene(root, WIDTH, HEIGHT);
+        primaryStage.setScene(scene);
+        primaryStage.setTitle(TITLE);
+        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream(ICON_URL)));
+        primaryStage.setResizable(false);
+        primaryStage.show();
+        // Hides previous window
+        ((Node) (actionEvent.getSource())).getScene().getWindow().hide();
+    }
+
+    public void loadStage(ActionEvent actionEvent, Staff staff, int orderId, String controller) throws IOException {
+
+        FXMLLoader loader = new FXMLLoader();
+        Stage primaryStage = new javafx.stage.Stage();
+        loader.setLocation(Start.class.getResource(controller));
+        Parent root = loader.load();
+
+        switch (controller) {
+            case VIEW_ORDER_LINES: {
+                ViewOrderLinesController c = loader.getController();
+                c.initialize(staff, orderId);
+                break;
+            }
         }
 
         Scene scene = new Scene(root, WIDTH, HEIGHT);

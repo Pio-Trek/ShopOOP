@@ -14,6 +14,7 @@ import service.StageService;
 
 import java.io.IOException;
 import java.sql.*;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -45,6 +46,8 @@ public class ViewProductsController {
     private Staff staff;
     private Customer customer;
     private StageService stage = new StageService();
+
+    private DecimalFormat decimal = new DecimalFormat("##.00");
 
     /**
      * Initialize the class.
@@ -300,7 +303,7 @@ public class ViewProductsController {
     @FXML
     private void addToBasket() {
         int quantity = comboBoxQuantity.getValue();
-        double total = currentProduct().getPrice() * quantity;
+        double total = Double.parseDouble(decimal.format(currentProduct().getPrice() * quantity));
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Product added to basket");

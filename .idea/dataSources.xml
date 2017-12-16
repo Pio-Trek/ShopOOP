@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="ShopDB" uuid="40e3d608-bf70-4948-9480-d7c30974289e">
+    <data-source source="LOCAL" name="ShopDB" uuid="0a2e2e62-2793-4dea-9089-c8e7d51d983f">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <imported>true</imported>
       <remarks>SQLite</remarks>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
       <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/src/data/ShopDB.sqlite</jdbc-url>
-      <default-dialect>TSQL</default-dialect>
       <driver-properties>
         <property name="enable_load_extension" value="true" />
       </driver-properties>

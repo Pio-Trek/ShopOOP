@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<VBox prefHeight="645.0" prefWidth="770.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="controllers.ViewOrdersController">
+	<children>
+		<AnchorPane maxHeight="-1.0" maxWidth="-1.0" VBox.vgrow="ALWAYS">
+			<children>
+				<Label alignment="CENTER" layoutY="48.0" prefHeight="44.0" prefWidth="770.0" style="&#10;"
+				       text="View Orders" textAlignment="CENTER" wrapText="false">
+					<font>
+						<Font size="36.0"/>
+					</font>
+				</Label>
+				<Button layoutX="609.0" layoutY="549.0" mnemonicParsing="false" onAction="#back" text="◄ BACK">
+					<font>
+						<Font size="24.0"/>
+					</font>
+				</Button>
+				<Button fx:id="buttonViewOrder" layoutX="257.0" layoutY="480.0" mnemonicParsing="false"
+				        onAction="#viewSelectedOrder" text="View Selected Order">
+					<font>
+						<Font size="24.0"/>
+					</font>
+				</Button>
+				<TableView fx:id="tableViewOrders" layoutX="56.0" layoutY="123.0" onMouseClicked="#buttonSetEnable"
+				           prefHeight="301.0" prefWidth="666.0">
+					<columns>
+						<TableColumn fx:id="tableColumnId" editable="false" maxWidth="131.0" minWidth="68.0"
+						             prefWidth="131.0" resizable="false" text="Order ID"/>
+						<TableColumn fx:id="tableColumnUsername" editable="false" maxWidth="131.0" minWidth="68.0"
+						             prefWidth="131.0" resizable="false" text="Username"/>
+						<TableColumn fx:id="tableColumnDate" editable="false" maxWidth="380.0" minWidth="203.0"
+						             prefWidth="205.0" resizable="false" text="Date"/>
+						<TableColumn fx:id="tableColumnTotal" editable="false" maxWidth="170.0" minWidth="79.0"
+						             prefWidth="170.0" resizable="false" text="Total"/>
+						<TableColumn fx:id="tableColumnStatus" editable="false" maxWidth="182.0" minWidth="72.0"
+						             prefWidth="158.0" resizable="false" text="Status"/>
+					</columns>
+				</TableView>
+			</children>
+		</AnchorPane>
+	</children>
+</VBox>

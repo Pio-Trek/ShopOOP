@@ -36,6 +36,11 @@ public class StaffHomeController {
         stage.loadStage(actionEvent, staff, ControllerService.VIEW_PRODUCTS);
     }
 
+    @FXML
+    private void viewOrders(ActionEvent actionEvent) throws IOException {
+        stage.loadStage(actionEvent, staff, ControllerService.VIEW_ORDERS);
+    }
+
     /**
      * Log out button action.
      * Opens a new stage {@link StaffLoginController}

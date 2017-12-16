@@ -76,7 +76,8 @@ public class CustomerHomeController {
     }
 
     @FXML
-    private void viewOrders(ActionEvent actionEvent) {
+    private void viewOrders(ActionEvent actionEvent) throws IOException {
+        stage.loadStage(actionEvent, customer, ControllerService.VIEW_ORDERS);
     }
 
     @FXML

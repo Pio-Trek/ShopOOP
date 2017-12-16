@@ -18,6 +18,13 @@ public class Product {
         this.stockLevel = 0;
     }
 
+    // Overloaded constructor uses for {@link OrderLine}
+    public Product(int productId, String productName, double price) {
+        this.productId = productId;
+        this.productName = productName;
+        this.price = price;
+    }
+
     // Overloaded constructor
     public Product(int productId, String productName, double price, int stockLevel) {
         this.productId = productId;

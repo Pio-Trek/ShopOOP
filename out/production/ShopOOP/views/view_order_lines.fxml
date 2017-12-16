@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<VBox prefHeight="645.0" prefWidth="770.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ViewOrderLinesController">
+	<children>
+		<AnchorPane maxHeight="-1.0" maxWidth="-1.0" VBox.vgrow="ALWAYS">
+			<children>
+				<Label fx:id="labelHeaderOrderNum" alignment="CENTER" layoutY="48.0" prefHeight="44.0" prefWidth="770.0" style="&#10;" textAlignment="CENTER" wrapText="false">
+					<font>
+						<Font size="36.0" />
+					</font>
+				</Label>
+				<Button layoutX="609.0" layoutY="549.0" mnemonicParsing="false" onAction="#back" text="◄ BACK">
+					<font>
+						<Font size="24.0" />
+					</font>
+				</Button>
+				<TableView fx:id="tableViewOrderLines" layoutX="56.0" layoutY="123.0" prefHeight="301.0" prefWidth="666.0">
+					<columns>
+						<TableColumn fx:id="tableColumnId" editable="false" maxWidth="131.0" minWidth="68.0" prefWidth="82.0" resizable="false" text="Product ID" />
+						<TableColumn fx:id="tableColumnName" editable="false" maxWidth="380.0" minWidth="177.0" prefWidth="202.0" resizable="false" text="Product Name" />
+						<TableColumn fx:id="tableColumnPrice" editable="false" maxWidth="222.0" minWidth="79.0" prefWidth="136.0" resizable="false" text="Price" />
+						<TableColumn fx:id="tableColumnQuantity" editable="false" maxWidth="242.0" minWidth="72.0" prefWidth="114.0" resizable="false" text="Quantity" />
+						<TableColumn fx:id="tableColumnTotal" editable="false" maxWidth="235.0" minWidth="72.0" prefWidth="130.0" resizable="false" text="Total" />
+					</columns>
+				</TableView>
+			</children>
+		</AnchorPane>
+	</children>
+</VBox>

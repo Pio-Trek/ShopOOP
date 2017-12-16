@@ -68,6 +68,7 @@ public final class ShopContract {
 
         public final static String TABLE_NAME = "Orders";
 
+        public final static String COLUMN_ORDER_ID = "OrderId";
         public final static String COLUMN_ORDER_DATE = "OrderDate";
         public final static String COLUMN_USERNAME = "Username";
         public final static String COLUMN_ORDER_TOTAL = "OrderTotal";

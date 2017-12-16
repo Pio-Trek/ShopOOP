@@ -1,5 +1,6 @@
 package controllers;
 
+import data.ShopContract.OrderLinesEntry;
 import data.ShopContract.OrdersEntry;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -7,17 +8,19 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import models.Customer;
 import models.OrderLine;
 import service.ControllerService;
 import service.DbManager;
+import service.LabelStatusService;
 import service.StageService;
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 
 public class CustomerBasketController {
 
@@ -39,11 +42,16 @@ public class CustomerBasketController {
     private Button buttonRemoveFromBasket;
     @FXML
     private Label labelTotal;
+    @FXML
+    private Label labelStatus;
 
     private Customer customer;
     private ObservableList<OrderLine> basket = FXCollections.observableArrayList();
     private StageService stage = new StageService();
     private double totalPrice;
+    private int orderId;
+
+    private DecimalFormat decimal = new DecimalFormat("##.00");
 
 
     public void initialize(Customer customer, ObservableList<OrderLine> basket) {
@@ -68,17 +76,20 @@ public class CustomerBasketController {
     }
 
     private void getTotalPrice() {
-        totalPrice = basket.stream().mapToDouble(OrderLine::getLineTotal).reduce(0, (x, y) -> x + y);
+        double calculateTotal = basket.stream()
+                .mapToDouble(OrderLine::getLineTotal)
+                .reduce(0, (x, y) -> x + y);
 
-        labelTotal.setText("Total: " + POUND_SYMBOL + String.format("%.2f", totalPrice));
+        totalPrice = Double.parseDouble(decimal.format(calculateTotal));
+
+        labelTotal.setText("Total: " + POUND_SYMBOL + totalPrice);
     }
 
+    // Mouse Event !!!
     @FXML
-    private void buttonSetEnable(MouseEvent mouseEvent) {
+    private void buttonSetEnable() {
         if (tableViewBasket.getSelectionModel().getSelectedItem() != null) {
             buttonRemoveFromBasket.setDisable(false);
-        } else {
-            buttonRemoveFromBasket.setDisable(true);
         }
     }
 
@@ -97,7 +108,21 @@ public class CustomerBasketController {
     private void buyProducts(ActionEvent actionEvent) throws IOException {
         if (customer.isRegistered()) {
 
-            insertNewOrder();
+            if (insertNewOrder() && insertNewOrderLine()) {
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Order completed");
+                alert.setHeaderText(null);
+                alert.setContentText("Thank you. You'r order is now precessing.");
+
+                alert.showAndWait();
+
+                stage.loadStage(actionEvent, customer, ControllerService.CUSTOMER_HOME);
+
+            } else {
+                LabelStatusService.getError(labelStatus,
+                        "An error occurred. Pleas try again later.");
+            }
 
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -111,7 +136,7 @@ public class CustomerBasketController {
         }
     }
 
-    private void insertNewOrder() {
+    private boolean insertNewOrder() {
         String sql = "INSERT INTO " + OrdersEntry.TABLE_NAME + "("
                 + OrdersEntry.COLUMN_ORDER_DATE + ", "
                 + OrdersEntry.COLUMN_USERNAME + ", "
@@ -128,23 +153,60 @@ public class CustomerBasketController {
             // Update
             int row = pstmt.executeUpdate();
 
-            System.out.println("DONE");
+            return row == 1 && getOrderId(pstmt);
 
-/*            if (row == 1) {
-                LabelStatusService.getConfirmation(labelStatus, "Registration Successful");
-                if (basket != null) {
-                    backToBasket(actionEvent);
-                }
-            } else {
-                LabelStatusService.getConfirmation(labelStatus, "Error: Could not create new user");
-            }
-
-            clear();*/
         } catch (SQLException e) {
-            System.out.println("ERROR");
-            //LabelStatusService.getError(labelStatus, e.getMessage());
+            LabelStatusService.getError(labelStatus, e.getMessage());
+        }
+        return false;
+    }
+
+    private boolean getOrderId(PreparedStatement pstmt) throws SQLException {
+        try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
+            if (generatedKeys.next()) {
+                orderId = (generatedKeys.getInt(1));
+                return true;
+            } else {
+                throw new SQLException("Error: Order ID not obtained.");
+            }
         }
     }
+
+    private boolean insertNewOrderLine() {
+        String sql = "INSERT INTO " + OrderLinesEntry.TABLE_NAME + "("
+                + OrderLinesEntry.COLUMN_PRODUCT_ID + ", "
+                + OrderLinesEntry.COLUMN_QUANTITY + ", "
+                + OrderLinesEntry.COLUMN_LINE_TOTAL + ", "
+                + OrderLinesEntry.COLUMN_ORDER_ID + ") VALUES(?,?,?,?)";
+
+        try (Connection conn = DbManager.Connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            int count = 0;
+
+            for (OrderLine p : basket) {
+                pstmt.setInt(1, p.getProduct().getProductId());
+                pstmt.setInt(2, p.getQuantity());
+                pstmt.setDouble(3, p.getLineTotal());
+                pstmt.setInt(4, orderId);
+                pstmt.addBatch();
+
+                ++count;
+            }
+
+            if (count % basket.size() == 0) {
+                pstmt.executeBatch();
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (SQLException e) {
+            LabelStatusService.getError(labelStatus, e.getMessage());
+        }
+        return false;
+    }
+
 
     @FXML
     private void back(ActionEvent actionEvent) throws IOException {
