@@ -24,8 +24,7 @@ The application is still in progress and will be completed by the end of Februar
 - [x] View Customer orders
 - [x] Edit Customer details
 - [x] Close Customer account
-- [ ] Clean code & code review
-- [ ] Do tests
+- [ ] Waiting for further instructions from lecturer
 
 **The other requirements are unknown at this moment. The project will probably change over time.**
 
