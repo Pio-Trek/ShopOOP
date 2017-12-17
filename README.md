@@ -19,11 +19,13 @@ The application is still in progress and will be completed by the end of Februar
 - [x] Validate login input
 - [x] Validate adding and editing products
 - [x] List of categories and products (staff)
-- [ ] Orders list
+- [x] Orders list
 - [x] Customer and Guest can browse product list
-- [ ] View Customer orders
+- [x] View Customer orders
 - [x] Edit Customer details
 - [x] Close Customer account
+- [ ] Clean code & code review
+- [ ] Do tests
 
 **The other requirements are unknown at this moment. The project will probably change over time.**
 
