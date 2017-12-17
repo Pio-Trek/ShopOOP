@@ -27,16 +27,7 @@ public class Staff extends User {
         return salary;
     }
 
-    // Setters
-    public void setSalary(double salary) {
-        this.salary = salary;
-    }
-
     public String getPosition() {
         return position;
-    }
-
-    public void setPosition(String position) {
-        this.position = position;
     }
 }

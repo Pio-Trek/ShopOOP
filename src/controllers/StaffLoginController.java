@@ -30,7 +30,7 @@ public class StaffLoginController {
 
     /**
      * Login button action.
-     * Get user login data and check if user exists in database.
+     * Get user login data and check if a user exists in the database.
      */
     @FXML
     private void login(ActionEvent actionEvent) throws IOException {

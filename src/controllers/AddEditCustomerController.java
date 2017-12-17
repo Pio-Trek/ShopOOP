@@ -11,15 +11,13 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import models.Customer;
 import models.OrderLine;
-import service.ControllerService;
-import service.DbManager;
-import service.LabelStatusService;
-import service.StageService;
+import service.*;
 import validation.CompareObjects;
 import validation.RegisterValidation;
 
 import java.io.IOException;
 import java.sql.*;
+import java.util.Objects;
 
 public class AddEditCustomerController {
 
@@ -50,16 +48,31 @@ public class AddEditCustomerController {
     private ObservableList<OrderLine> basket = FXCollections.observableArrayList();
 
 
+    /**
+     * Initialize the class when registering a new {@link Customer}
+     */
     public void initialize() {
         labelHeader.setText("Register New Customer");
     }
 
+    /**
+     * Initialize the class when registering a new {@link Customer} which
+     * already had added products to a basket
+     *
+     * @param customer Passing a {@link Customer} object.
+     * @param basket   unregistered user ObservableList basket.
+     */
     public void initialize(Customer customer, ObservableList<OrderLine> basket) {
         labelHeader.setText("Register New Customer");
         this.customer = customer;
         this.basket = basket;
     }
 
+    /**
+     * Initialize the class when editing an existing {@link Customer}
+     *
+     * @param customer Passing a {@link Customer} object.
+     */
     public void initialize(Customer customer) {
         this.customer = customer;
         labelHeader.setText("Edit Customer");
@@ -67,6 +80,9 @@ public class AddEditCustomerController {
         displayCustomer();
     }
 
+    /**
+     * Populate existing {@link Customer} data into TextField
+     */
     private void displayCustomer() {
         inputUsername.setText(customer.getUsername());
         inputPassword.setText(customer.getPassword());
@@ -81,10 +97,10 @@ public class AddEditCustomerController {
     /**
      * Register button action.
      * Get user registration data and check if user exists in database
-     * if not exist then add a new row with record to a database.
+     * if not exist then add a new row with the record to a database.
      */
     @FXML
-    private void submit(ActionEvent actionEvent) throws SQLException, IOException {
+    private void submit(ActionEvent actionEvent) throws IOException {
         RegisterValidation result = RegisterValidation.validResult(
                 inputUsername.getText(),
                 inputPassword.getText(),
@@ -115,6 +131,11 @@ public class AddEditCustomerController {
 
     }
 
+    /**
+     * Create a new {@link Customer} object from given user input.
+     *
+     * @return {@link Customer} object.
+     */
     private Customer createNewCustomer() {
 
         String username = inputUsername.getText().trim();
@@ -141,7 +162,7 @@ public class AddEditCustomerController {
                 + CustomerEntry.COLUMN_USERNAME + " = '" + username + "'";
 
         try (Connection conn = DbManager.Connect();
-             Statement stmt = conn.createStatement();
+             Statement stmt = Objects.requireNonNull(conn).createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
             return !rs.next();
@@ -152,6 +173,11 @@ public class AddEditCustomerController {
         }
     }
 
+    /**
+     * Create a new {@link Customer} record in database
+     *
+     * @param customer Passing a {@link Customer} object.
+     */
     private void insertNewUser(Customer customer, ActionEvent actionEvent) throws IOException {
         String sql = "INSERT INTO " + CustomerEntry.TABLE_NAME + "("
                 + CustomerEntry.COLUMN_USERNAME + ", "
@@ -164,7 +190,7 @@ public class AddEditCustomerController {
                 + CustomerEntry.COLUMN_POSTCODE + ") VALUES(?,?,?,?,?,?,?,?)";
 
         try (Connection conn = DbManager.Connect();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+             PreparedStatement pstmt = Objects.requireNonNull(conn).prepareStatement(sql)) {
 
             pstmt.setString(1, customer.getUsername());
             pstmt.setString(2, customer.getPassword());
@@ -175,8 +201,6 @@ public class AddEditCustomerController {
             pstmt.setString(7, customer.getTown());
             pstmt.setString(8, customer.getPostcode());
 
-
-            // Update
             int row = pstmt.executeUpdate();
 
             if (row == 1) {
@@ -199,7 +223,7 @@ public class AddEditCustomerController {
      * Get user input, compare it with passed {@see getCustomer} object and if is
      * different then update existing Customer in database.
      */
-    private void updateEditedCustomer(Customer currentCustomer) throws SQLException {
+    private void updateEditedCustomer(Customer currentCustomer) {
 
         // Compare Customer objects.
         if (CompareObjects.compare(currentCustomer, customer)) {
@@ -210,7 +234,7 @@ public class AddEditCustomerController {
     }
 
     /**
-     * Update data of a User specified by the Username column.
+     * Update data of a user specified by the Username column.
      */
     private void updateDb() {
         String sql = "UPDATE " + CustomerEntry.TABLE_NAME + " SET "
@@ -224,7 +248,7 @@ public class AddEditCustomerController {
                 + " WHERE " + CustomerEntry.COLUMN_USERNAME + " = ?";
 
         try (Connection conn = DbManager.Connect();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+             PreparedStatement pstmt = Objects.requireNonNull(conn).prepareStatement(sql)) {
 
             // Set the corresponding param
             pstmt.setString(1, inputPassword.getText().trim());
@@ -236,7 +260,6 @@ public class AddEditCustomerController {
             pstmt.setString(7, inputPostcode.getText().trim());
             pstmt.setString(8, inputUsername.getText().trim());
 
-            // Update
             int row = pstmt.executeUpdate();
 
             if (row == 1) {
@@ -252,12 +275,10 @@ public class AddEditCustomerController {
     }
 
     private void backToBasket(ActionEvent actionEvent) throws IOException {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("You are now sing in");
-        alert.setHeaderText(null);
-        alert.setContentText("Thank you for registration.\nYou will be now moved to your basket.");
-
-        alert.showAndWait();
+        AlertService.showDialog(Alert.AlertType.INFORMATION,
+                "You are now sign in",
+                null,
+                "Thank you for registration.\nYou will be now moved to your basket.");
 
         stage.loadStage(actionEvent, newCustomer, basket, ControllerService.CUSTOMER_BASKET);
     }
@@ -281,7 +302,8 @@ public class AddEditCustomerController {
 
     /**
      * Back button action.
-     * Opens a new stage {@link CustomerLoginController}
+     * Opens a new stage {@link CustomerLoginController} when user is not sign in
+     * Opens a new stage {@link CustomerHomeController} when user is sign in
      */
     @FXML
     private void back(ActionEvent actionEvent) throws IOException {

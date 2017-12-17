@@ -10,6 +10,13 @@ import models.Footwear;
 public class CompareObjects {
 
     /**
+     * Constructor to prevent from accidentally instantiating this class
+     */
+    private CompareObjects() {
+        throw new IllegalStateException("Must not instantiate an element of this class");
+    }
+
+    /**
      * Compare Clothing objects by creating from them a two mutable strings using StringBuilder class and
      * compare them using equals() method.
      *

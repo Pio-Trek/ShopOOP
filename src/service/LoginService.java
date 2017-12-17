@@ -10,17 +10,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * Login helper. Manages if user exist in a database.
+ */
 public class LoginService {
 
     private Connection conn;
     private Statement stmt;
     private ResultSet rs;
-
-    /**
-     * Login helper. Manages if user exist in a database.
-     */
-    public LoginService() {
-    }
 
     public boolean execute(String tableName, String username, String password) {
 

@@ -1,57 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-
-<VBox prefHeight="645.0" prefWidth="770.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CustomerBasketController">
-	<children>
-		<AnchorPane maxHeight="-1.0" maxWidth="-1.0" VBox.vgrow="ALWAYS">
-			<children>
-				<Label alignment="CENTER" layoutY="48.0" prefHeight="44.0" prefWidth="770.0" style="&#10;" text="Basket" textAlignment="CENTER" wrapText="false">
-					<font>
-						<Font size="36.0" />
-					</font>
-				</Label>
-				<Button layoutX="609.0" layoutY="549.0" mnemonicParsing="false" onAction="#back" text="◄ BACK">
-					<font>
-						<Font size="24.0" />
-					</font>
-				</Button>
-				<Button fx:id="buttonRemoveFromBasket" layoutX="253.0" layoutY="481.0" mnemonicParsing="false" onAction="#removeProductFromBasket" text="Remove From Basket" textFill="RED">
-					<font>
-						<Font size="24.0" />
-					</font>
-				</Button>
-				<Button layoutX="344.0" layoutY="549.0" mnemonicParsing="false" onAction="#buyProducts" text="BUY" textFill="GREEN">
-					<font>
-						<Font name="System Bold" size="24.0" />
-					</font>
-				</Button>
-				<TableView fx:id="tableViewBasket" layoutX="56.0" layoutY="123.0" onMouseClicked="#buttonSetEnable" prefHeight="301.0" prefWidth="666.0">
-					<columns>
-						<TableColumn fx:id="tableColumnId" editable="false" maxWidth="95.0" minWidth="68.0" prefWidth="73.0" resizable="false" text="ID" />
-						<TableColumn fx:id="tableColumnName" editable="false" maxWidth="380.0" minWidth="308.0" prefWidth="310.0" resizable="false" text="Product Name" />
-						<TableColumn fx:id="tableColumnPrice" editable="false" maxWidth="170.0" minWidth="79.0" prefWidth="84.0" resizable="false" text="Price" />
-						<TableColumn fx:id="tableColumnQuantity" editable="false" maxWidth="182.0" minWidth="72.0" prefWidth="81.0" resizable="false" text="Quantity" />
-						<TableColumn fx:id="tableColumnTotal" editable="false" maxWidth="188.0" minWidth="80.0" prefWidth="116.0" resizable="false" text="Total" />
-					</columns>
-				</TableView>
-				<Label fx:id="labelTotal" layoutX="520.0" layoutY="432.0" prefHeight="35.0" prefWidth="202.0" text="Total:">
-					<font>
-						<Font size="24.0" />
-					</font>
-				</Label>
-				<Label fx:id="labelStatus" layoutX="31.0" layoutY="600.0">
-					<font>
-						<Font size="24.0"/>
-					</font>
-				</Label>
-			</children>
-		</AnchorPane>
-	</children>
+<?import javafx.scene.text.*?>
+<VBox prefHeight="645.0" prefWidth="770.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="controllers.CustomerBasketController">
+	<AnchorPane VBox.vgrow="ALWAYS">
+		<Label alignment="CENTER" layoutY="48.0" prefHeight="44.0" prefWidth="770.0" style="&#10;" text="Basket"
+		       textAlignment="CENTER">
+			<font>
+				<Font size="36.0"/>
+			</font>
+		</Label>
+		<Button layoutX="609.0" layoutY="549.0" mnemonicParsing="false" onAction="#back" text="◄ BACK">
+			<font>
+				<Font size="24.0"/>
+			</font>
+		</Button>
+		<Button fx:id="buttonRemoveFromBasket" layoutX="253.0" layoutY="481.0" mnemonicParsing="false"
+		        onAction="#removeProductFromBasket" text="Remove From Basket" textFill="RED">
+			<font>
+				<Font size="24.0"/>
+			</font>
+		</Button>
+		<Button layoutX="344.0" layoutY="549.0" mnemonicParsing="false" onAction="#buyProducts" text="BUY"
+		        textFill="GREEN">
+			<font>
+				<Font name="System Bold" size="24.0"/>
+			</font>
+		</Button>
+		<TableView fx:id="tableViewBasket" layoutX="56.0" layoutY="123.0" onMouseClicked="#buttonSetEnable"
+		           prefHeight="301.0" prefWidth="666.0">
+			<columns>
+				<TableColumn fx:id="tableColumnId" editable="false" maxWidth="95.0" minWidth="68.0" prefWidth="73.0"
+				             resizable="false" text="ID"/>
+				<TableColumn fx:id="tableColumnName" editable="false" maxWidth="380.0" minWidth="308.0"
+				             prefWidth="310.0" resizable="false" text="Product Name"/>
+				<TableColumn fx:id="tableColumnPrice" editable="false" maxWidth="170.0" minWidth="79.0"
+				             prefWidth="84.0" resizable="false" text="Price"/>
+				<TableColumn fx:id="tableColumnQuantity" editable="false" maxWidth="182.0" minWidth="72.0"
+				             prefWidth="81.0" resizable="false" text="Quantity"/>
+				<TableColumn fx:id="tableColumnTotal" editable="false" maxWidth="188.0" minWidth="80.0"
+				             prefWidth="116.0" resizable="false" text="Total"/>
+			</columns>
+		</TableView>
+		<Label fx:id="labelTotal" layoutX="520.0" layoutY="432.0" prefHeight="35.0" prefWidth="202.0" text="Total:">
+			<font>
+				<Font size="24.0"/>
+			</font>
+		</Label>
+		<Label fx:id="labelStatus" layoutX="31.0" layoutY="600.0">
+			<font>
+				<Font size="24.0"/>
+			</font>
+		</Label>
+	</AnchorPane>
 </VBox>

@@ -9,6 +9,13 @@ import java.sql.SQLException;
  */
 public class DbManager {
 
+    /**
+     * Constructor to prevent from accidentally instantiating this class
+     */
+    private DbManager() {
+        throw new IllegalStateException("Must not instantiate an element of this class");
+    }
+
     public static Connection Connect() {
 
         // Name of the SQL driver

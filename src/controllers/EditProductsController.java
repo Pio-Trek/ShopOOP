@@ -3,10 +3,7 @@ package controllers;
 import data.ShopContract.ProductsEntry;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import models.Clothing;
 import models.Footwear;
 import models.Staff;
@@ -19,9 +16,11 @@ import validation.ProductValidation;
 
 import java.io.IOException;
 import java.sql.*;
+import java.util.Objects;
 
 public class EditProductsController {
 
+    public ToggleGroup productType;
     @FXML
     private RadioButton radioButtonClothing;
     @FXML
@@ -55,15 +54,13 @@ public class EditProductsController {
 
     private Staff staff;
     private StageService stage = new StageService();
-    private Connection conn;
-    private Statement stmt;
 
     private Clothing clothing;
     private Footwear footwear;
 
     /**
-     * Initialize the class when add new Product.
-     * Change JavaFX elements to disabled unit user will chose what type of Product to add.
+     * Initialize the class when adding new Product.
+     * Change JavaFX elements to disabled until a user will choose what type of Product to add.
      * Disable all elements uses to edit Product.
      *
      * @param staff Staff object.
@@ -136,7 +133,8 @@ public class EditProductsController {
 
     /**
      * Set visibility or disable/enable status for JavaFX elements.
-     * Used to prevent user to choose Clothing or Footwear.
+     * Used to prevent user to choose Clothing when Footwear is
+     * selected and vice versa.
      */
     private void setElementsDisabled(boolean value) {
         inputProductName.setDisable(value);
@@ -188,7 +186,7 @@ public class EditProductsController {
      * Action for Submit button for Add and Edit mode.
      */
     @FXML
-    private void saveProduct() throws SQLException {
+    private void saveProduct() {
 
         // Validate user input
         ProductValidation result = ProductValidation.validResult(inputProductName.getText(), inputPrice.getText(), inputStockLevel.getText(), inputMeasurement.getText(), labelSize.getText());
@@ -231,7 +229,7 @@ public class EditProductsController {
                 + ProductsEntry.COLUMN_PRODUCT_NAME + " = '" + productName + "'";
 
         try (Connection conn = DbManager.Connect();
-             Statement stmt = conn.createStatement();
+             Statement stmt = Objects.requireNonNull(conn).createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
             return !rs.next();
@@ -242,7 +240,9 @@ public class EditProductsController {
         }
     }
 
-
+    /**
+     * Creates a new Product record in database.
+     */
     private void insertNewProduct() {
         String productName = inputProductName.getText().trim();
         double price = Double.parseDouble(inputPrice.getText().trim());
@@ -257,7 +257,7 @@ public class EditProductsController {
                 + ProductsEntry.COLUMN_SIZE + ") VALUES(?,?,?,?,?)";
 
         try (Connection conn = DbManager.Connect();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+             PreparedStatement pstmt = Objects.requireNonNull(conn).prepareStatement(sql)) {
 
             pstmt.setString(1, productName);
             pstmt.setDouble(2, price);
@@ -287,10 +287,10 @@ public class EditProductsController {
 
     /**
      * Indicates when {@see buttonSubmit} is press.
-     * Get user input, compare it with passed {@see clothing} object and if is differentthen update existing Product
-     * in database.
+     * Get user input, compare it with passed {@see clothing} object
+     * and if is differentthen update existing Product in database.
      */
-    private void updateEditedProduct() throws SQLException {
+    private void updateEditedProduct() {
 
         int productId = Integer.parseInt(inputProductId.getText());
         String productName = inputProductName.getText().trim();
@@ -335,7 +335,7 @@ public class EditProductsController {
 
 
         try (Connection conn = DbManager.Connect();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+             PreparedStatement pstmt = Objects.requireNonNull(conn).prepareStatement(sql)) {
 
             // Set the corresponding param
             pstmt.setString(1, inputProductName.getText().trim());
@@ -379,6 +379,7 @@ public class EditProductsController {
 
     /**
      * Back button action.
+     * Opens a new stage {@link ViewProductsController}
      */
     @FXML
     private void back(ActionEvent actionEvent) throws IOException {

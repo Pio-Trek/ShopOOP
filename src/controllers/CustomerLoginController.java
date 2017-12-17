@@ -40,7 +40,7 @@ public class CustomerLoginController {
 
     /**
      * Login button action.
-     * Get user login data and check if user exists in database.
+     * Gets user login data and check if a user exists in the database.
      */
     @FXML
     private void login(ActionEvent actionEvent) throws IOException {
@@ -68,12 +68,11 @@ public class CustomerLoginController {
         } else {
             LabelStatusService.getError(labelStatus, result.getErrorMessage());
         }
-
     }
 
 
     /**
-     * Perform an action when user press the Enter key.
+     * Perform a login action when a user presses the Enter key.
      *
      * @param keyEvent Indicates user keyboard input.
      */

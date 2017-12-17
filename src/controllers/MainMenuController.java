@@ -21,7 +21,7 @@ public class MainMenuController {
     }
 
     /**
-     * Customer Login button action.
+     * Staff Login button action.
      * Opens a new stage {@link StaffLoginController}
      */
     @FXML
@@ -29,6 +29,10 @@ public class MainMenuController {
         stage.loadStage(actionEvent, ControllerService.STAFF_LOGIN);
     }
 
+    /**
+     * View Products button action.
+     * Opens a new stage {@link ViewProductsController}
+     */
     @FXML
     private void viewProducts(ActionEvent actionEvent) throws IOException {
         stage.loadStage(actionEvent, ControllerService.VIEW_PRODUCTS);

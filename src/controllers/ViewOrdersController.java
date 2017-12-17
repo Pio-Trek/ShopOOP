@@ -10,7 +10,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.input.MouseEvent;
 import models.Customer;
 import models.Order;
 import models.Staff;
@@ -26,6 +25,7 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 
 public class ViewOrdersController {
 
@@ -50,18 +50,31 @@ public class ViewOrdersController {
     private Customer customer;
     private Staff staff;
     private ObservableList<Order> order = FXCollections.observableArrayList();
-    private ActionEvent viewOrderEvent = new ActionEvent();
 
+    /**
+     * Initialize the class when {@link Customer} want to see orders.
+     *
+     * @param customer Passing a {@link Customer} object.
+     */
     public void initialize(Customer customer) {
         this.customer = customer;
         setTableViewOrders();
     }
 
+    /**
+     * Initialize the class when {@link Staff} want to see all
+     * customers orders.
+     *
+     * @param staff Passing a {@link Staff} object.
+     */
     public void initialize(Staff staff) {
         this.staff = staff;
         setTableViewOrders();
     }
 
+    /**
+     * Populate TableView with {@link Order} objects.
+     */
     private void setTableViewOrders() {
         buttonViewOrder.setDisable(true);
 
@@ -78,6 +91,7 @@ public class ViewOrdersController {
         tableColumnStatus.setCellValueFactory(
                 o -> new SimpleObjectProperty<>(o.getValue().getStatus()));
 
+        // Hide or show {@see tableColumnUsername} depends on when customer or staff is browsing orders.
         if (customer != null) {
             tableColumnUsername.setVisible(false);
         } else {
@@ -87,14 +101,22 @@ public class ViewOrdersController {
         tableViewOrders.setItems(order);
     }
 
+    /**
+     * Gets {@link Order} data from database.
+     * When a customer is browsing then show only this customer orders.
+     * When staff is browsing then show all customers orders.
+     */
     private void getOrdersFromDb() {
         String sql;
 
+        // When browsing as customer
         if (customer != null) {
             sql = "SELECT * FROM " + OrdersEntry.TABLE_NAME
                     + " WHERE " + OrdersEntry.COLUMN_USERNAME
                     + " = '" + customer.getUsername() + "' "
                     + "ORDER BY " + OrdersEntry.COLUMN_ORDER_DATE + " DESC";
+
+            // When browsing as staff
         } else {
             sql = "SELECT * FROM " + OrdersEntry.TABLE_NAME
                     + " ORDER BY " + OrdersEntry.COLUMN_USERNAME + " ASC,"
@@ -103,7 +125,7 @@ public class ViewOrdersController {
 
 
         try (Connection conn = DbManager.Connect();
-             Statement stmt = conn.createStatement();
+             Statement stmt = Objects.requireNonNull(conn).createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
@@ -122,17 +144,20 @@ public class ViewOrdersController {
 
     }
 
+    /**
+     * Get {@link Order} ID number from TableView and pass it to a {@link ViewOrderLinesController} stage.
+     */
     @FXML
-    private void viewSelectedOrder(ActionEvent actionEvent) throws IOException {
+    private void viewSelectedOrder(ActionEvent actionEvent) throws Exception {
         int orderId = tableViewOrders
                 .getSelectionModel()
                 .selectedItemProperty()
                 .get().getOrderId();
 
         if (customer != null) {
-            stage.loadStage(actionEvent, customer, orderId, ControllerService.VIEW_ORDER_LINES);
+            stage.loadStage(actionEvent, customer, null, orderId, ControllerService.VIEW_ORDER_LINES);
         } else {
-            stage.loadStage(actionEvent, staff, orderId, ControllerService.VIEW_ORDER_LINES);
+            stage.loadStage(actionEvent, null, staff, orderId, ControllerService.VIEW_ORDER_LINES);
         }
     }
 
@@ -146,13 +171,21 @@ public class ViewOrdersController {
         return formatter.format(new Date(timeInMilliseconds * 1000));
     }
 
+    /**
+     * MouseEvent when product is selected then set enable {@see buttonViewOrder}
+     */
     @FXML
-    private void buttonSetEnable(MouseEvent mouseEvent) {
+    private void buttonSetEnable() {
         if (tableViewOrders.getSelectionModel().selectedItemProperty().get() != null) {
             buttonViewOrder.setDisable(false);
         }
     }
 
+    /**
+     * Back button action.
+     * Opens a new stage {@link CustomerHomeController} when browsing as customer.
+     * Opens a new stage {@link StaffHomeController} when browsing as staff.
+     */
     @FXML
     private void back(ActionEvent actionEvent) throws IOException {
         if (customer != null) {

@@ -36,6 +36,10 @@ public class StaffHomeController {
         stage.loadStage(actionEvent, staff, ControllerService.VIEW_PRODUCTS);
     }
 
+    /**
+     * View All Orders button action
+     * Opens a new stage {@link ViewOrdersController}
+     */
     @FXML
     private void viewOrders(ActionEvent actionEvent) throws IOException {
         stage.loadStage(actionEvent, staff, ControllerService.VIEW_ORDERS);

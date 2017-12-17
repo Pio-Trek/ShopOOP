@@ -1,7 +1,7 @@
 package models;
 
 /**
- * Clothin data model class
+ * Clothing data model class
  */
 public class Clothing extends Product {
 
@@ -23,10 +23,5 @@ public class Clothing extends Product {
     // Getter
     public String getMeasurement() {
         return measurement;
-    }
-
-    // Setter
-    public void setMeasurement(String measurement) {
-        this.measurement = measurement;
     }
 }

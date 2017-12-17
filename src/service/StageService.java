@@ -21,11 +21,6 @@ import static service.ControllerService.*;
  */
 public class StageService {
 
-    private final String ICON_URL = "../views/images/store.png";
-    private final String TITLE = "ShopOOP - Piotr Przechodzki";
-    private final int WIDTH = 770;
-    private final int HEIGHT = 645;
-
     /**
      * Create a first stage.
      *
@@ -37,14 +32,7 @@ public class StageService {
         Stage primaryStage = new javafx.stage.Stage();
         loader.setLocation(Start.class.getResource(controller));
         Parent root = loader.load();
-
-        Scene scene = new Scene(root, WIDTH, HEIGHT);
-        primaryStage.setScene(scene);
-        primaryStage.setTitle(TITLE);
-        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream(ICON_URL)));
-        primaryStage.setResizable(false);
-        primaryStage.show();
-
+        getStage(root, primaryStage);
     }
 
     /**
@@ -64,20 +52,17 @@ public class StageService {
             case VIEW_PRODUCTS: {
                 ViewProductsController c = loader.getController();
                 Customer anonymousCustomer = new Customer();
+
+                // Passes the {@link Customer} object to the {@link CustomerHomeController}
                 c.initialize(anonymousCustomer);
                 break;
             }
         }
 
-        Scene scene = new Scene(root, WIDTH, HEIGHT);
-        primaryStage.setScene(scene);
-        primaryStage.setTitle(TITLE);
-        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream(ICON_URL)));
-        primaryStage.setResizable(false);
-        primaryStage.show();
+        getStage(root, primaryStage);
+
         // Hides previous window
         ((Node) (actionEvent.getSource())).getScene().getWindow().hide();
-
     }
 
     /**
@@ -98,7 +83,6 @@ public class StageService {
         switch (controller) {
             case CUSTOMER_HOME: {
                 CustomerHomeController c = loader.getController();
-                // Passes the {@link Customer} object to the {@link CustomerHomeController}
                 c.initialize(customer);
                 break;
             }
@@ -120,42 +104,11 @@ public class StageService {
             }
         }
 
+        getStage(root, primaryStage);
 
-        Scene scene = new Scene(root, WIDTH, HEIGHT);
-        primaryStage.setScene(scene);
-        primaryStage.setTitle(TITLE);
-        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream(ICON_URL)));
-        primaryStage.setResizable(false);
-        primaryStage.show();
         // Hides previous window
         ((Node) (actionEvent.getSource())).getScene().getWindow().hide();
     }
-
-    public void loadStage(ActionEvent actionEvent, Customer customer, int orderId, String controller) throws IOException {
-
-        FXMLLoader loader = new FXMLLoader();
-        Stage primaryStage = new javafx.stage.Stage();
-        loader.setLocation(Start.class.getResource(controller));
-        Parent root = loader.load();
-
-        switch (controller) {
-            case VIEW_ORDER_LINES: {
-                ViewOrderLinesController c = loader.getController();
-                c.initialize(customer, orderId);
-                break;
-            }
-        }
-
-        Scene scene = new Scene(root, WIDTH, HEIGHT);
-        primaryStage.setScene(scene);
-        primaryStage.setTitle(TITLE);
-        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream(ICON_URL)));
-        primaryStage.setResizable(false);
-        primaryStage.show();
-        // Hides previous window
-        ((Node) (actionEvent.getSource())).getScene().getWindow().hide();
-    }
-
 
     public void loadStage(ActionEvent actionEvent, Customer customer, ObservableList<OrderLine> basket, String controller) throws IOException {
 
@@ -187,13 +140,31 @@ public class StageService {
             }
         }
 
+        getStage(root, primaryStage);
 
-        Scene scene = new Scene(root, WIDTH, HEIGHT);
-        primaryStage.setScene(scene);
-        primaryStage.setTitle(TITLE);
-        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream(ICON_URL)));
-        primaryStage.setResizable(false);
-        primaryStage.show();
+        // Hides previous window
+        ((Node) (actionEvent.getSource())).getScene().getWindow().hide();
+    }
+
+    public void loadStage(ActionEvent actionEvent, Customer customer, Staff staff, int orderId, String controller) throws Exception {
+
+        FXMLLoader loader = new FXMLLoader();
+        Stage primaryStage = new javafx.stage.Stage();
+        loader.setLocation(Start.class.getResource(controller));
+        Parent root = loader.load();
+
+        if (customer != null) {
+            ViewOrderLinesController c = loader.getController();
+            c.initialize(customer, orderId);
+        } else if (staff != null) {
+            ViewOrderLinesController c = loader.getController();
+            c.initialize(staff, orderId);
+        } else {
+            throw new IllegalStateException("ERROR: Customer and Staff object cannot be both null.");
+        }
+
+        getStage(root, primaryStage);
+
         // Hides previous window
         ((Node) (actionEvent.getSource())).getScene().getWindow().hide();
     }
@@ -236,12 +207,8 @@ public class StageService {
             }
         }
 
-        Scene scene = new Scene(root, WIDTH, HEIGHT);
-        primaryStage.setScene(scene);
-        primaryStage.setTitle(TITLE);
-        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream(ICON_URL)));
-        primaryStage.setResizable(false);
-        primaryStage.show();
+        getStage(root, primaryStage);
+
         // Hides previous window
         ((Node) (actionEvent.getSource())).getScene().getWindow().hide();
     }
@@ -269,38 +236,20 @@ public class StageService {
             c.initialize(staff, footwear);
         }
 
-        Scene scene = new Scene(root, WIDTH, HEIGHT);
-        primaryStage.setScene(scene);
-        primaryStage.setTitle(TITLE);
-        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream(ICON_URL)));
-        primaryStage.setResizable(false);
-        primaryStage.show();
+        getStage(root, primaryStage);
+
         // Hides previous window
         ((Node) (actionEvent.getSource())).getScene().getWindow().hide();
     }
 
-    public void loadStage(ActionEvent actionEvent, Staff staff, int orderId, String controller) throws IOException {
-
-        FXMLLoader loader = new FXMLLoader();
-        Stage primaryStage = new javafx.stage.Stage();
-        loader.setLocation(Start.class.getResource(controller));
-        Parent root = loader.load();
-
-        switch (controller) {
-            case VIEW_ORDER_LINES: {
-                ViewOrderLinesController c = loader.getController();
-                c.initialize(staff, orderId);
-                break;
-            }
-        }
-
-        Scene scene = new Scene(root, WIDTH, HEIGHT);
+    private void getStage(Parent root, Stage primaryStage) {
+        Scene scene = new Scene(root, 770, 645);
         primaryStage.setScene(scene);
+        String TITLE = "ShopOOP - Piotr Przechodzki";
         primaryStage.setTitle(TITLE);
+        String ICON_URL = "../views/images/store.png";
         primaryStage.getIcons().add(new Image(getClass().getResourceAsStream(ICON_URL)));
         primaryStage.setResizable(false);
         primaryStage.show();
-        // Hides previous window
-        ((Node) (actionEvent.getSource())).getScene().getWindow().hide();
     }
 }

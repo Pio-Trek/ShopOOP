@@ -7,7 +7,7 @@ import javafx.beans.property.SimpleIntegerProperty;
  * OrderLine data model class
  */
 public class OrderLine {
-    //private final SimpleIntegerProperty orderLineId;
+
     private final SimpleIntegerProperty quantity;
     private final SimpleDoubleProperty lineTotal;
     private Product product;
@@ -15,7 +15,6 @@ public class OrderLine {
 
     // Overloaded constructor
     public OrderLine(Integer quantity, Double lineTotal, Product product) {
-        //this.orderLineId = new SimpleIntegerProperty(orderLineId);
         this.quantity = new SimpleIntegerProperty(quantity);
         this.lineTotal = new SimpleDoubleProperty(lineTotal);
         this.product = product;
@@ -23,10 +22,6 @@ public class OrderLine {
 
 
     // Getters
-/*    public int getOrderLineId() {
-        return orderLineId.get();
-    }*/
-
     public int getQuantity() {
         return quantity.get();
     }

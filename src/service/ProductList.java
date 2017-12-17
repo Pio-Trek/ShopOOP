@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Get Product list from database (IDs and Names) and add to a List of Products
@@ -26,7 +27,7 @@ public class ProductList {
 
 
     /**
-     * Constructor to prevent from accidentally instantiating the contract class
+     * Constructor to prevent from accidentally instantiating this class
      */
     private ProductList() {
         throw new IllegalStateException("Must not instantiate an element of this class");
@@ -36,7 +37,7 @@ public class ProductList {
         productList.clear();
 
         try (Connection conn = DbManager.Connect();
-             Statement stmt = conn.createStatement();
+             Statement stmt = Objects.requireNonNull(conn).createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
             // Add product ID and Name to List of Products

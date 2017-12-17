@@ -7,10 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import models.*;
-import service.ControllerService;
-import service.DbManager;
-import service.ProductList;
-import service.StageService;
+import service.*;
 
 import java.io.IOException;
 import java.sql.*;
@@ -50,7 +47,7 @@ public class ViewProductsController {
     private DecimalFormat decimal = new DecimalFormat("##.00");
 
     /**
-     * Initialize the class.
+     * Initialize the class when {@link Staff} want to see, edit or delete {@link Product}s.
      *
      * @param staff Passing a {@link Staff} object.
      */
@@ -60,6 +57,12 @@ public class ViewProductsController {
         setListViewProduct();
     }
 
+    /**
+     * Initialize the class when {@link Customer} want to see
+     * {@link Product}s or add them to a basket.
+     *
+     * @param customer Passing a {@link Customer} object.
+     */
     public void initialize(Customer customer) {
         this.customer = customer;
         setComboBoxQuantity();
@@ -68,6 +71,13 @@ public class ViewProductsController {
         buttonViewBasket.setDisable(true);
     }
 
+    /**
+     * Initialize the class when {@link Customer} going back to
+     * browse product with the already created shopping basket.
+     *
+     * @param customer Passing a {@link Customer} object.
+     * @param basket   Passing created shopping basket.
+     */
     public void initialize(Customer customer, ObservableList<OrderLine> basket) {
         this.customer = customer;
         this.basket = basket;
@@ -84,12 +94,19 @@ public class ViewProductsController {
 
     }
 
+    /**
+     * Populate {@see listViewCategory} with Category list and set Category and
+     * Product ListView to allows for only one item to be selected at a time.
+     */
     private void setListViewProduct() {
         listViewCategory.getItems().addAll(categoryList);
         listViewCategory.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         listViewProduct.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     }
 
+    /**
+     * Populate ComboBox with quantity numbers.
+     */
     private void setComboBoxQuantity() {
         comboBoxQuantity.getItems().addAll(quantityNumbers);
         comboBoxQuantity.getSelectionModel().selectFirst();
@@ -126,7 +143,6 @@ public class ViewProductsController {
             listViewProduct.getItems().addAll(productList);
 
             // Populate Product using a ListView setCellFactory() method
-
             listViewProduct.setCellFactory(lv -> new ListCell<>() {
                 @Override
                 public void updateItem(Product product, boolean empty) {
@@ -163,6 +179,9 @@ public class ViewProductsController {
         }
     }
 
+    /**
+     * Set disable buttons for Customer view and when no product is selected.
+     */
     private void buttonsCustomerView() {
         buttonsStaffViewVisible(false);
 
@@ -184,6 +203,11 @@ public class ViewProductsController {
         }
     }
 
+    /**
+     * Set Enable/Disable for buttons and ComboBox when Product is selected/unselected.
+     *
+     * @param value TRUE/FALSE for set disable JavaFX elements.
+     */
     private void buttonsSetDisable(boolean value) {
         buttonDeleteProduct.setDisable(value);
         buttonEditProduct.setDisable(value);
@@ -191,6 +215,11 @@ public class ViewProductsController {
         buttonAddToBasket.setDisable(value);
     }
 
+    /**
+     * Set visibility for buttons and ComboBox.
+     *
+     * @param value TRUE/FALSE for visibility JavaFX elements.
+     */
     private void buttonsStaffViewVisible(boolean value) {
         comboBoxQuantity.setVisible(!value);
         buttonAddToBasket.setVisible(!value);
@@ -202,7 +231,8 @@ public class ViewProductsController {
 
     /**
      * Action for Edit button.
-     * Fetch the Product data from the database and open a new stage {@link EditProductsController}.
+     * Fetch the Product data from the database and open a
+     * new stage {@link EditProductsController}.
      */
     @FXML
     private void editProduct(ActionEvent actionEvent) throws IOException {
@@ -212,7 +242,7 @@ public class ViewProductsController {
                 + ProductsEntry.COLUMN_PRODUCT_NAME + " = '" + currentProduct().getProductName() + "'";
 
         try (Connection conn = DbManager.Connect();
-             Statement stmt = conn.createStatement();
+             Statement stmt = Objects.requireNonNull(conn).createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
             int productId = rs.getInt(ProductsEntry.COLUMN_PRODUCT_ID);
@@ -245,20 +275,19 @@ public class ViewProductsController {
     @FXML
     private void deleteProduct() {
 
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Delete Product");
-        alert.setHeaderText("Are you sure you want to delete product?");
-        alert.setContentText("PRODUCT ID: " + currentProduct().getProductId()
-                + "\nPRODUCT NAME: " + currentProduct().getProductName());
+        Optional<ButtonType> buttonResult = AlertService.showDialog(Alert.AlertType.CONFIRMATION,
+                "Delete Product",
+                "Are you sure you want to delete product?",
+                "PRODUCT ID: " + currentProduct().getProductId()
+                        + "\nPRODUCT NAME: " + currentProduct().getProductName());
 
-        Optional<ButtonType> result = alert.showAndWait();
-        if ((result.isPresent()) && (result.get() == ButtonType.OK)) {
+        if ((buttonResult.isPresent()) && (buttonResult.get() == ButtonType.OK)) {
 
             String sql = "DELETE FROM " + ProductsEntry.TABLE_NAME + " WHERE "
                     + ProductsEntry.COLUMN_PRODUCT_ID + " = ?";
 
             try (Connection conn = DbManager.Connect();
-                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                 PreparedStatement pstmt = Objects.requireNonNull(conn).prepareStatement(sql)) {
 
                 // Set the product ID
                 pstmt.setInt(1, currentProduct().getProductId());
@@ -300,24 +329,31 @@ public class ViewProductsController {
         stage.loadStage(actionEvent, staff, ControllerService.EDIT_PRODUCTS);
     }
 
+    /**
+     * Add To Basket button action.
+     * Add selected Product of given quantity to a {@see basket} ObservableList
+     */
     @FXML
     private void addToBasket() {
         int quantity = comboBoxQuantity.getValue();
         double total = Double.parseDouble(decimal.format(currentProduct().getPrice() * quantity));
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Product added to basket");
-        alert.setHeaderText(null);
-        alert.setContentText("I have added: " + currentProduct().getProductName()
-                + "\nPrice: " + currentProduct().getPrice()
-                + "\nQuantity: " + comboBoxQuantity.getValue());
-
-        alert.showAndWait();
+        AlertService.showDialog(Alert.AlertType.INFORMATION,
+                "Product added to basket",
+                null,
+                "I have added: " + currentProduct().getProductName()
+                        + "\nPrice: " + currentProduct().getPrice()
+                        + "\nQuantity: " + comboBoxQuantity.getValue());
 
         basket.add(new OrderLine(quantity, total, currentProduct()));
         buttonViewBasket.setDisable(false);
     }
 
+
+    /**
+     * View Basket button action.
+     * Opens a new stage {@link CustomerBasketController} with shopping basket list.
+     */
     @FXML
     private void viewBasket(ActionEvent actionEvent) throws IOException {
         stage.loadStage(actionEvent, customer, basket, ControllerService.CUSTOMER_BASKET);

@@ -38,17 +38,8 @@ public class Product {
         return productId;
     }
 
-    // Setters
-    public void setProductId(int productId) {
-        this.productId = productId;
-    }
-
     public String getProductName() {
         return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
     }
 
     public double getPrice() {
@@ -61,9 +52,5 @@ public class Product {
 
     public int getStockLevel() {
         return stockLevel;
-    }
-
-    public void setStockLevel(int stockLevel) {
-        this.stockLevel = stockLevel;
     }
 }

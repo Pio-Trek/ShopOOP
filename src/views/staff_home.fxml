@@ -6,40 +6,36 @@
 <?import javafx.scene.text.*?>
 <VBox prefHeight="645.0" prefWidth="770.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="controllers.StaffHomeController">
-	<children>
-		<AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
-			<children>
-				<Label fx:id="labelWelcome" alignment="CENTER" contentDisplay="CENTER" layoutX="-2.0" layoutY="48.0"
-				       prefHeight="17.0" prefWidth="770.0" text="Welcome NAME" textAlignment="CENTER"
-				       textOverrun="WORD_ELLIPSIS">
-					<font>
-						<Font size="36.0"/>
-					</font>
-				</Label>
-				<Button layoutX="276.0" layoutY="254.0" mnemonicParsing="false" onAction="#modifyProducts"
-				        text="Modify Products">
-					<font>
-						<Font size="24.0"/>
-					</font>
-				</Button>
-				<Button layoutX="280.0" layoutY="344.0" mnemonicParsing="false" onAction="#viewOrders"
-				        text="View All Orders">
-					<font>
-						<Font size="24.0"/>
-					</font>
-				</Button>
-				<Button layoutX="326.0" layoutY="549.0" mnemonicParsing="false" onAction="#logout" text="Log out">
-					<font>
-						<Font size="24.0"/>
-					</font>
-				</Button>
-				<Label alignment="CENTER" contentDisplay="CENTER" layoutY="101.0" prefHeight="35.0" prefWidth="770.0"
-				       text="You are logged in as Staff" textAlignment="CENTER">
-					<font>
-						<Font size="24.0"/>
-					</font>
-				</Label>
-			</children>
-		</AnchorPane>
-	</children>
+	<AnchorPane VBox.vgrow="ALWAYS">
+		<Label fx:id="labelWelcome" alignment="CENTER" contentDisplay="CENTER" layoutX="-2.0" layoutY="48.0"
+		       prefHeight="17.0" prefWidth="770.0" text="Welcome NAME" textAlignment="CENTER"
+		       textOverrun="WORD_ELLIPSIS">
+			<font>
+				<Font size="36.0"/>
+			</font>
+		</Label>
+		<Button layoutX="276.0" layoutY="254.0" mnemonicParsing="false" onAction="#modifyProducts"
+		        text="Modify Products">
+			<font>
+				<Font size="24.0"/>
+			</font>
+		</Button>
+		<Button layoutX="280.0" layoutY="344.0" mnemonicParsing="false" onAction="#viewOrders"
+		        text="View All Orders">
+			<font>
+				<Font size="24.0"/>
+			</font>
+		</Button>
+		<Button layoutX="326.0" layoutY="549.0" mnemonicParsing="false" onAction="#logout" text="Log out">
+			<font>
+				<Font size="24.0"/>
+			</font>
+		</Button>
+		<Label alignment="CENTER" contentDisplay="CENTER" layoutY="101.0" prefHeight="35.0" prefWidth="770.0"
+		       text="You are logged in as Staff" textAlignment="CENTER">
+			<font>
+				<Font size="24.0"/>
+			</font>
+		</Label>
+	</AnchorPane>
 </VBox>

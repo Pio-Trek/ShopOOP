@@ -1,66 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-
-<VBox prefHeight="645.0" prefWidth="770.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ViewProductsController">
-	<children>
-		<AnchorPane maxHeight="-1.0" maxWidth="-1.0" VBox.vgrow="ALWAYS">
-			<children>
-				<Label fx:id="labelProducts" alignment="CENTER" layoutY="48.0" prefHeight="44.0" prefWidth="770.0" style="&#10;" text="Modify Products" textAlignment="CENTER" wrapText="false">
-					<font>
-						<Font size="36.0" />
-					</font>
-				</Label>
-				<Button layoutX="609.0" layoutY="549.0" mnemonicParsing="false" onAction="#back" text="◄ BACK">
-					<font>
-						<Font size="24.0" />
-					</font>
-				</Button>
-				<ListView fx:id="listViewCategory" layoutX="147.0" layoutY="140.0" onMouseClicked="#getProductList" prefHeight="263.0" prefWidth="200.0" />
-				<Button fx:id="buttonAddProduct" layoutX="298.0" layoutY="421.0" mnemonicParsing="false" onAction="#addNewProduct" text="Add Product">
-					<font>
-						<Font size="24.0" />
-					</font>
-				</Button>
-				<Button fx:id="buttonEditProduct" layoutX="299.0" layoutY="481.0" mnemonicParsing="false" onAction="#editProduct" text="Edit Product">
-					<font>
-						<Font size="24.0" />
-					</font>
-				</Button>
-				<Button fx:id="buttonDeleteProduct" layoutX="284.0" layoutY="549.0" mnemonicParsing="false" onAction="#deleteProduct" text="Delete Product" textFill="RED">
-					<font>
-						<Font size="24.0" />
-					</font>
-				</Button>
-				<ListView fx:id="listViewProduct" layoutX="434.0" layoutY="140.0" onMouseClicked="#buttonsSetEnable" prefHeight="263.0" prefWidth="200.0" />
-				<Label layoutX="186.0" layoutY="109.0" text="Categories">
-					<font>
-						<Font size="24.0" />
-					</font>
-				</Label>
-				<Label layoutX="489.0" layoutY="109.0" text="Product">
-					<font>
-						<Font size="24.0" />
-					</font>
-				</Label>
-				<ComboBox fx:id="comboBoxQuantity" layoutX="497.0" layoutY="430.0" prefHeight="27.0" prefWidth="80.0" />
-				<Button fx:id="buttonAddToBasket" layoutX="286.0" layoutY="421.0" mnemonicParsing="false" onAction="#addToBasket" text="Add to Basket ">
-					<font>
-						<Font size="24.0" />
-					</font>
-				</Button>
-				<Button fx:id="buttonViewBasket" layoutX="300.0" layoutY="481.0" mnemonicParsing="false" onAction="#viewBasket" text="View Basket">
-					<font>
-						<Font size="24.0" />
-					</font>
-				</Button>
-			</children>
-		</AnchorPane>
-	</children>
+<?import javafx.scene.text.*?>
+<VBox prefHeight="645.0" prefWidth="770.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="controllers.ViewProductsController">
+	<AnchorPane VBox.vgrow="ALWAYS">
+		<Label alignment="CENTER" layoutY="48.0" prefHeight="44.0" prefWidth="770.0"
+		       style="&#10;" text="Modify Products" textAlignment="CENTER">
+			<font>
+				<Font size="36.0"/>
+			</font>
+		</Label>
+		<Button layoutX="609.0" layoutY="549.0" mnemonicParsing="false" onAction="#back" text="◄ BACK">
+			<font>
+				<Font size="24.0"/>
+			</font>
+		</Button>
+		<ListView fx:id="listViewCategory" layoutX="147.0" layoutY="140.0" onMouseClicked="#getProductList"
+		          prefHeight="263.0" prefWidth="200.0"/>
+		<Button fx:id="buttonAddProduct" layoutX="298.0" layoutY="421.0" mnemonicParsing="false"
+		        onAction="#addNewProduct" text="Add Product">
+			<font>
+				<Font size="24.0"/>
+			</font>
+		</Button>
+		<Button fx:id="buttonEditProduct" layoutX="299.0" layoutY="481.0" mnemonicParsing="false"
+		        onAction="#editProduct" text="Edit Product">
+			<font>
+				<Font size="24.0"/>
+			</font>
+		</Button>
+		<Button fx:id="buttonDeleteProduct" layoutX="284.0" layoutY="549.0" mnemonicParsing="false"
+		        onAction="#deleteProduct" text="Delete Product" textFill="RED">
+			<font>
+				<Font size="24.0"/>
+			</font>
+		</Button>
+		<ListView fx:id="listViewProduct" layoutX="434.0" layoutY="140.0" onMouseClicked="#buttonsSetEnable"
+		          prefHeight="263.0" prefWidth="200.0"/>
+		<Label layoutX="186.0" layoutY="109.0" text="Categories">
+			<font>
+				<Font size="24.0"/>
+			</font>
+		</Label>
+		<Label layoutX="489.0" layoutY="109.0" text="Product">
+			<font>
+				<Font size="24.0"/>
+			</font>
+		</Label>
+		<ComboBox fx:id="comboBoxQuantity" layoutX="497.0" layoutY="430.0" prefHeight="27.0" prefWidth="80.0"/>
+		<Button fx:id="buttonAddToBasket" layoutX="286.0" layoutY="421.0" mnemonicParsing="false"
+		        onAction="#addToBasket" text="Add to Basket ">
+			<font>
+				<Font size="24.0"/>
+			</font>
+		</Button>
+		<Button fx:id="buttonViewBasket" layoutX="300.0" layoutY="481.0" mnemonicParsing="false"
+		        onAction="#viewBasket" text="View Basket">
+			<font>
+				<Font size="24.0"/>
+			</font>
+		</Button>
+	</AnchorPane>
 </VBox>
