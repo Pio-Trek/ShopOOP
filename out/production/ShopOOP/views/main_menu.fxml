@@ -9,40 +9,34 @@
 <?import javafx.scene.text.Font?>
 <VBox prefHeight="645.0" prefWidth="770.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="controllers.MainMenuController">
-	<children>
-		<AnchorPane maxHeight="-1.0" maxWidth="-1.0" VBox.vgrow="ALWAYS">
-			<children>
-				<Label alignment="CENTER" layoutX="203.0" layoutY="62.0" style="&#10;" text="Shop Main Menu"
-				       textAlignment="CENTER" wrapText="false">
-					<font>
-						<Font size="48.0"/>
-					</font>
-				</Label>
-				<Button layoutX="285.0" layoutY="353.0" mnemonicParsing="false" onAction="#customerLogin"
-				        text="Customer Login">
-					<font>
-						<Font size="24.0"/>
-					</font>
-				</Button>
-				<Button layoutX="313.0" layoutY="424.0" mnemonicParsing="false" onAction="#staffLogin"
-				        text="Staff Login">
-					<font>
-						<Font size="24.0"/>
-					</font>
-				</Button>
-				<ImageView fitHeight="150.0" fitWidth="200.0" layoutX="311.0" layoutY="158.0" pickOnBounds="true"
-				           preserveRatio="true">
-					<image>
-						<Image url="@../views/images/store.png"/>
-					</image>
-				</ImageView>
-				<Button layoutX="295.0" layoutY="525.0" mnemonicParsing="false" text="View Products"
-				        onAction="#viewProducts">
-					<font>
-						<Font size="24.0"/>
-					</font>
-				</Button>
-			</children>
-		</AnchorPane>
-	</children>
+	<AnchorPane VBox.vgrow="ALWAYS">
+		<Label alignment="CENTER" layoutX="203.0" layoutY="62.0" style="&#10;" text="Shop Main Menu"
+		       textAlignment="CENTER">
+			<font>
+				<Font size="48.0"/>
+			</font>
+		</Label>
+		<Button layoutX="285.0" layoutY="353.0" mnemonicParsing="false" onAction="#customerLogin"
+		        text="Customer Login">
+			<font>
+				<Font size="24.0"/>
+			</font>
+		</Button>
+		<Button layoutX="313.0" layoutY="424.0" mnemonicParsing="false" onAction="#staffLogin"
+		        text="Staff Login">
+			<font>
+				<Font size="24.0"/>
+			</font>
+		</Button>
+		<ImageView fitHeight="150.0" fitWidth="200.0" layoutX="311.0" layoutY="158.0" pickOnBounds="true"
+		           preserveRatio="true">
+			<Image url="@../views/images/store.png"/>
+		</ImageView>
+		<Button layoutX="295.0" layoutY="525.0" mnemonicParsing="false" text="View Products"
+		        onAction="#viewProducts">
+			<font>
+				<Font size="24.0"/>
+			</font>
+		</Button>
+	</AnchorPane>
 </VBox>

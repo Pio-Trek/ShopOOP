@@ -355,7 +355,6 @@ public class EditProductsController {
 
             if (row == 1) {
                 LabelStatusService.getConfirmation(labelStatus, "Product updated successful");
-                clear();
             } else {
                 LabelStatusService.getConfirmation(labelStatus, "Error: Could not update product");
             }

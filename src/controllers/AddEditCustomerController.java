@@ -289,7 +289,6 @@ public class AddEditCustomerController {
      */
     @FXML
     private void clear() {
-        inputUsername.clear();
         inputPassword.clear();
         inputFirstName.clear();
         inputLastName.clear();
