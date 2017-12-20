@@ -10,11 +10,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.*?>
-<VBox prefHeight="645.0" prefWidth="770.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1"
+<VBox prefHeight="645.0" prefWidth="770.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="controllers.ViewProductsController">
 	<AnchorPane VBox.vgrow="ALWAYS">
-		<Label alignment="CENTER" layoutY="48.0" prefHeight="44.0" prefWidth="770.0"
-		       style="&#10;" text="Modify Products" textAlignment="CENTER">
+		<Label alignment="CENTER" layoutY="48.0" prefHeight="44.0" prefWidth="770.0" style="&#10;"
+		       text="Modify Products" textAlignment="CENTER">
 			<font>
 				<Font size="36.0"/>
 			</font>
@@ -63,8 +63,8 @@
 				<Font size="24.0"/>
 			</font>
 		</Button>
-		<Button fx:id="buttonViewBasket" layoutX="300.0" layoutY="481.0" mnemonicParsing="false"
-		        onAction="#viewBasket" text="View Basket">
+		<Button fx:id="buttonViewBasket" layoutX="300.0" layoutY="481.0" mnemonicParsing="false" onAction="#viewBasket"
+		        text="View Basket">
 			<font>
 				<Font size="24.0"/>
 			</font>

@@ -127,26 +127,21 @@ public class CustomerBasketController {
     @FXML
     private void buyProducts(ActionEvent actionEvent) throws IOException {
         if (customer.isRegistered()) {
-//TODO check
-            if (updateStockLevel()) {
+
+            if (updateStockLevel() && insertNewOrder() && insertNewOrderLine()) {
+
+                AlertService.showDialog(Alert.AlertType.INFORMATION,
+                        "Order completed",
+                        null,
+                        "Thank you. You'r order is now precessing.");
 
 
-                if (insertNewOrder() && insertNewOrderLine()) {
+                stage.loadStage(actionEvent, customer, ControllerService.CUSTOMER_HOME);
 
-                    AlertService.showDialog(Alert.AlertType.INFORMATION,
-                            "Order completed",
-                            null,
-                            "Thank you. You'r order is now precessing.");
-
-
-                    stage.loadStage(actionEvent, customer, ControllerService.CUSTOMER_HOME);
-
-                } else {
-                    LabelStatusService.getError(labelStatus,
-                            "An error occurred. Pleas try again later.");
-                }
+            } else {
+                LabelStatusService.getError(labelStatus,
+                        "An error occurred. Pleas try again later.");
             }
-
         } else {
             AlertService.showDialog(Alert.AlertType.WARNING,
                     "You need to be login",
@@ -156,7 +151,10 @@ public class CustomerBasketController {
             stage.loadStage(actionEvent, customer, basket, ControllerService.CUSTOMER_LOGIN);
         }
     }
-//TODO write a comment for this method here
+
+    /**
+     * Updates the stock level in the database of all products in Customer basket.
+     */
     private boolean updateStockLevel() {
 
         String sql = "UPDATE " + ProductsEntry.TABLE_NAME + " SET "

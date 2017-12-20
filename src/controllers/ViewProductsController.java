@@ -18,9 +18,9 @@ import java.util.Optional;
 
 public class ViewProductsController {
 
+    private static final String NO_STOCK_BACKGROUND_COLOUR = "derive(red, 98%)";
     private final List<String> categoryList = ProductList.getCategoryList();
     private final List<Integer> quantityNumbers = ProductList.getQuantityNumbers();
-
     private ObservableList<OrderLine> basket = FXCollections.observableArrayList();
 
     @FXML
@@ -46,7 +46,6 @@ public class ViewProductsController {
 
     private DecimalFormat decimal = new DecimalFormat("##.00");
 
-    //TODO check if quantity is valid in database
 
     /**
      * Initialize the class when {@link Staff} want to see, edit or delete {@link Product}s.
@@ -67,7 +66,6 @@ public class ViewProductsController {
      */
     public void initialize(Customer customer) {
         this.customer = customer;
-        setComboBoxQuantity();
         buttonsCustomerView();
         setListViewProduct();
         buttonViewBasket.setDisable(true);
@@ -83,8 +81,6 @@ public class ViewProductsController {
     public void initialize(Customer customer, ObservableList<OrderLine> basket) {
         this.customer = customer;
         this.basket = basket;
-
-        setComboBoxQuantity();
         buttonsCustomerView();
         setListViewProduct();
 
@@ -108,11 +104,25 @@ public class ViewProductsController {
 
     /**
      * Populate ComboBox with quantity numbers.
+     * Quantity number depend on product stock level.
      */
     private void setComboBoxQuantity() {
-        comboBoxQuantity.getItems().addAll(quantityNumbers);
+
+        comboBoxQuantity.getSelectionModel().clearSelection();
+        comboBoxQuantity.getItems().clear();
+
+        int stockLevel;
+
+        // Set ComboBox number to product stock level
+        if (currentProduct().getStockLevel() <= 10) {
+            stockLevel = currentProduct().getStockLevel();
+            // Set ComboBox number to 10. This is maximum quantity number that Customer can order.
+        } else {
+            stockLevel = 10;
+        }
+
+        comboBoxQuantity.getItems().addAll(quantityNumbers.subList(0, stockLevel));
         comboBoxQuantity.getSelectionModel().selectFirst();
-        comboBoxQuantity.setVisibleRowCount(5);
     }
 
     /**
@@ -141,6 +151,7 @@ public class ViewProductsController {
         List<Product> productList = ProductList.getFromDb(sql);
 
         if (productList != null) {
+
             // Hold the list of Product in a ListView
             listViewProduct.getItems().addAll(productList);
 
@@ -149,7 +160,21 @@ public class ViewProductsController {
                 @Override
                 public void updateItem(Product product, boolean empty) {
                     super.updateItem(product, empty);
-                    setText(empty ? null : product.getProductName());
+
+                    if (empty) {
+                        setText(null);
+                        setStyle(null);
+                    } else {
+
+                        /*
+                            Set the background to red colour to indicate to Staff user that
+                            stock level of a product is 0.
+                         */
+                        if (product.getStockLevel() == 0) {
+                            setStyle("-fx-control-inner-background: " + NO_STOCK_BACKGROUND_COLOUR + ";");
+                        }
+                        setText(product.getProductName());
+                    }
                 }
             });
         }
@@ -162,10 +187,25 @@ public class ViewProductsController {
      * @return String with SQL statement to select all Products sorted ascending by "ProductName".
      */
     private String sqlQueryProducts(String columnName) {
-        return "SELECT * FROM " + ProductsEntry.TABLE_NAME + " WHERE "
-                + columnName + " IS NOT NULL AND "
-                + columnName + " != '' ORDER BY "
-                + ProductsEntry.COLUMN_PRODUCT_NAME + " ASC";
+        String sql;
+
+        // SQL Select Query for Staff - display all products.
+        if (staff != null) {
+            sql = "SELECT * FROM " + ProductsEntry.TABLE_NAME + " WHERE "
+                    + columnName + " IS NOT NULL AND "
+                    + columnName + " != '' ORDER BY "
+                    + ProductsEntry.COLUMN_PRODUCT_NAME + " ASC";
+
+            // SQL Select Query for Customer - display available products (stock level above 0).
+        } else {
+            sql = "SELECT * FROM " + ProductsEntry.TABLE_NAME + " WHERE "
+                    + ProductsEntry.COLUMN_STOCK_LEVEL + " > 0 AND "
+                    + columnName + " IS NOT NULL AND "
+                    + columnName + " != '' ORDER BY "
+                    + ProductsEntry.COLUMN_PRODUCT_NAME + " ASC";
+        }
+
+        return sql;
     }
 
     /**
@@ -202,6 +242,7 @@ public class ViewProductsController {
     private void buttonsSetEnable() {
         if (listViewProduct.getSelectionModel().getSelectedItem() != null) {
             buttonsSetDisable(false);
+            setComboBoxQuantity();
         }
     }
 
