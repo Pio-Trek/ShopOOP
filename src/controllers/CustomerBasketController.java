@@ -2,6 +2,7 @@ package controllers;
 
 import data.ShopContract.OrderLinesEntry;
 import data.ShopContract.OrdersEntry;
+import data.ShopContract.ProductsEntry;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -126,20 +127,24 @@ public class CustomerBasketController {
     @FXML
     private void buyProducts(ActionEvent actionEvent) throws IOException {
         if (customer.isRegistered()) {
-
-            if (insertNewOrder() && insertNewOrderLine()) {
-
-                AlertService.showDialog(Alert.AlertType.INFORMATION,
-                        "Order completed",
-                        null,
-                        "Thank you. You'r order is now precessing.");
+//TODO check
+            if (updateStockLevel()) {
 
 
-                stage.loadStage(actionEvent, customer, ControllerService.CUSTOMER_HOME);
+                if (insertNewOrder() && insertNewOrderLine()) {
 
-            } else {
-                LabelStatusService.getError(labelStatus,
-                        "An error occurred. Pleas try again later.");
+                    AlertService.showDialog(Alert.AlertType.INFORMATION,
+                            "Order completed",
+                            null,
+                            "Thank you. You'r order is now precessing.");
+
+
+                    stage.loadStage(actionEvent, customer, ControllerService.CUSTOMER_HOME);
+
+                } else {
+                    LabelStatusService.getError(labelStatus,
+                            "An error occurred. Pleas try again later.");
+                }
             }
 
         } else {
@@ -150,6 +155,37 @@ public class CustomerBasketController {
 
             stage.loadStage(actionEvent, customer, basket, ControllerService.CUSTOMER_LOGIN);
         }
+    }
+//TODO write a comment for this method here
+    private boolean updateStockLevel() {
+
+        String sql = "UPDATE " + ProductsEntry.TABLE_NAME + " SET "
+                + ProductsEntry.COLUMN_STOCK_LEVEL + " = ("
+                + ProductsEntry.COLUMN_STOCK_LEVEL + " - ?)"
+                + " WHERE " + ProductsEntry.COLUMN_PRODUCT_ID + " = ?";
+
+        try (Connection conn = DbManager.Connect();
+             PreparedStatement pstmt = Objects.requireNonNull(conn).prepareStatement(sql)) {
+
+            int count = 0;
+
+            for (OrderLine p : basket) {
+                pstmt.setInt(1, p.getQuantity());
+                pstmt.setInt(2, p.getProduct().getProductId());
+                pstmt.addBatch();
+            }
+
+            // Checks batch statements to be same as products in basket
+            if (count % basket.size() == 0) {
+                pstmt.executeBatch();
+                return true;
+            }
+
+        } catch (SQLException e) {
+            LabelStatusService.getError(labelStatus, e.getMessage());
+        }
+
+        return false;
     }
 
     /**

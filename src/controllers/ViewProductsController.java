@@ -46,6 +46,8 @@ public class ViewProductsController {
 
     private DecimalFormat decimal = new DecimalFormat("##.00");
 
+    //TODO check if quantity is valid in database
+
     /**
      * Initialize the class when {@link Staff} want to see, edit or delete {@link Product}s.
      *
@@ -335,18 +337,29 @@ public class ViewProductsController {
      */
     @FXML
     private void addToBasket() {
-        int quantity = comboBoxQuantity.getValue();
-        double total = Double.parseDouble(decimal.format(currentProduct().getPrice() * quantity));
+        // Checks if user already added a product to the basket
+        boolean productAlreadyInBasket = basket.stream().anyMatch(p -> p.getProduct().getProductName().equals(currentProduct().getProductName()));
 
-        AlertService.showDialog(Alert.AlertType.INFORMATION,
-                "Product added to basket",
-                null,
-                "I have added: " + currentProduct().getProductName()
-                        + "\nPrice: " + currentProduct().getPrice()
-                        + "\nQuantity: " + comboBoxQuantity.getValue());
+        if (productAlreadyInBasket) {
+            AlertService.showDialog(Alert.AlertType.ERROR,
+                    "Product is in the basket",
+                    null,
+                    "Product already exists in the basket.\n" +
+                            "Please, remove it from basket before adding again.");
+        } else {
+            int quantity = comboBoxQuantity.getValue();
+            double total = Double.parseDouble(decimal.format(currentProduct().getPrice() * quantity));
 
-        basket.add(new OrderLine(quantity, total, currentProduct()));
-        buttonViewBasket.setDisable(false);
+            AlertService.showDialog(Alert.AlertType.INFORMATION,
+                    "Product added to basket",
+                    null,
+                    "I have added: " + currentProduct().getProductName()
+                            + "\nPrice: " + currentProduct().getPrice()
+                            + "\nQuantity: " + comboBoxQuantity.getValue());
+
+            basket.add(new OrderLine(quantity, total, currentProduct()));
+            buttonViewBasket.setDisable(false);
+        }
     }
 
 
