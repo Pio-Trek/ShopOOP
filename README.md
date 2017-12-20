@@ -6,7 +6,7 @@ ShopOOP is a JavaFX desktop app, that uses SQLite database. The project is creat
 
 Basically, the app is a simple, desktop store system that allows the user to create a new account, browser products and make orders. The staff members can add or modify existing products and view user orders.
 
-The application is still in progress and will be completed by the end of February 2018. Below you can check what is done and what is need to be done.
+~~The application is still in progress and will be completed by the end of February 2018. Below you can check what is done and what is need to be done.~~
 
 ![Sample Screen](https://github.com/Pio-Trek/ShopOOP/blob/master/app01.png)
 
@@ -24,7 +24,7 @@ The application is still in progress and will be completed by the end of Februar
 - [x] View Customer orders
 - [x] Edit Customer details
 - [x] Close Customer account
-- [ ] Waiting for further instructions from lecturer
+- [x] Waiting for further instructions from lecturer
 
 **The other requirements are unknown at this moment. The project will probably change over time.**
 
