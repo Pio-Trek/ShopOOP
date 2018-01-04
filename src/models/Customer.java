@@ -1,6 +1,8 @@
 package models;
 
 
+import java.util.Objects;
+
 /**
  * Customer data model class
  */
@@ -51,5 +53,27 @@ public class Customer extends User {
 
     public boolean isRegistered() {
         return isRegistered;
+    }
+
+    /**
+     * Compare Customer objects.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Customer customer = (Customer) o;
+        return Objects.equals(getPassword(), customer.getPassword()) &&
+                Objects.equals(getFirstName(), customer.getFirstName()) &&
+                Objects.equals(getLastName(), customer.getLastName()) &&
+                Objects.equals(addressLine1, customer.addressLine1) &&
+                Objects.equals(addressLine2, customer.addressLine2) &&
+                Objects.equals(town, customer.town) &&
+                Objects.equals(postcode, customer.postcode);
+    }
+
+    @Override
+    public int hashCode() {
+        return 0;
     }
 }

@@ -11,7 +11,6 @@ import service.ControllerService;
 import service.DbManager;
 import service.LabelStatusService;
 import service.StageService;
-import validation.CompareObjects;
 import validation.ProductValidation;
 
 import java.io.IOException;
@@ -288,7 +287,7 @@ public class EditProductsController {
     /**
      * Indicates when {@see buttonSubmit} is press.
      * Get user input, compare it with passed {@see clothing} object
-     * and if is differentthen update existing Product in database.
+     * and if is different then update existing Product in database.
      */
     private void updateEditedProduct() {
 
@@ -302,7 +301,7 @@ public class EditProductsController {
             Clothing currentClothing = new Clothing(productId, productName, price, stockLevel, measurement);
 
             // Compare Clothing objects
-            if (CompareObjects.compare(currentClothing, clothing)) {
+            if (currentClothing.equals(clothing)) {
                 LabelStatusService.getError(labelStatus, "No changes has been made");
             } else {
                 updateDb();
@@ -312,7 +311,7 @@ public class EditProductsController {
             Footwear currentFootwear = new Footwear(productId, productName, price, stockLevel, size);
 
             // Compare Footwear objects.
-            if (CompareObjects.compare(currentFootwear, footwear)) {
+            if (currentFootwear.equals(footwear)) {
                 LabelStatusService.getError(labelStatus, "No changes has been made");
             } else {
                 updateDb();

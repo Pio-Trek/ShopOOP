@@ -1,5 +1,7 @@
 package models;
 
+import java.util.Objects;
+
 /**
  * Footwear data model class
  */
@@ -28,5 +30,24 @@ public class Footwear extends Product {
     // Setter
     public void setSize(int size) {
         this.size = size;
+    }
+
+    /**
+     * Compare Footwear objects.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Footwear footwear = (Footwear) o;
+        return Objects.equals(getProductName(), footwear.getProductName()) &&
+                Objects.equals(getPrice(), footwear.getPrice()) &&
+                Objects.equals(size, footwear.size) &&
+                Objects.equals(getStockLevel(), footwear.getStockLevel());
+    }
+
+    @Override
+    public int hashCode() {
+        return 0;
     }
 }

@@ -12,7 +12,6 @@ import javafx.scene.control.TextField;
 import models.Customer;
 import models.OrderLine;
 import service.*;
-import validation.CompareObjects;
 import validation.RegisterValidation;
 
 import java.io.IOException;
@@ -226,8 +225,8 @@ public class AddEditCustomerController {
     private void updateEditedCustomer(Customer currentCustomer) {
 
         // Compare Customer objects.
-        if (CompareObjects.compare(currentCustomer, customer)) {
-            LabelStatusService.getConfirmation(labelStatus, "No changes has been made");
+        if (currentCustomer.equals(customer)) {
+            LabelStatusService.getError(labelStatus, "No changes has been made");
         } else {
             updateDb();
         }
