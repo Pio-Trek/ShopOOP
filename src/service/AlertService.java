@@ -6,6 +6,9 @@ import javafx.stage.StageStyle;
 
 import java.util.Optional;
 
+/**
+ * Popup the JavaFX Alert Dialog.
+ */
 public class AlertService {
 
     /**
