@@ -13,8 +13,8 @@
 <VBox prefHeight="645.0" prefWidth="770.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="controllers.ViewProductsController">
 	<AnchorPane VBox.vgrow="ALWAYS">
-		<Label alignment="CENTER" layoutY="48.0" prefHeight="44.0" prefWidth="770.0" style="&#10;"
-		       text="Modify Products" textAlignment="CENTER">
+		<Label fx:id="labelHeader" alignment="CENTER" layoutY="48.0" prefHeight="44.0" prefWidth="770.0" style="&#10;"
+		       textAlignment="CENTER">
 			<font>
 				<Font size="36.0"/>
 			</font>

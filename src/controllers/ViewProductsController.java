@@ -39,6 +39,8 @@ public class ViewProductsController {
     private ListView<String> listViewCategory;
     @FXML
     private ListView<Product> listViewProduct = new ListView<>();
+    @FXML
+    private Label labelHeader;
 
     private Staff staff;
     private Customer customer;
@@ -54,6 +56,7 @@ public class ViewProductsController {
      */
     public void initialize(Staff staff) {
         this.staff = staff;
+        labelHeader.setText("Modify Products");
         buttonsStaffView();
         setListViewProduct();
     }
@@ -66,6 +69,7 @@ public class ViewProductsController {
      */
     public void initialize(Customer customer) {
         this.customer = customer;
+        labelHeader.setText("Browse Products");
         buttonsCustomerView();
         setListViewProduct();
         buttonViewBasket.setDisable(true);
@@ -388,6 +392,7 @@ public class ViewProductsController {
                     "Product already exists in the basket.\n" +
                             "Please, remove it from basket before adding again.");
         } else {
+
             int quantity = comboBoxQuantity.getValue();
             double total = Double.parseDouble(decimal.format(currentProduct().getPrice() * quantity));
 
@@ -400,9 +405,9 @@ public class ViewProductsController {
 
             basket.add(new OrderLine(quantity, total, currentProduct()));
             buttonViewBasket.setDisable(false);
+
         }
     }
-
 
     /**
      * View Basket button action.
